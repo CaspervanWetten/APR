@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proces Verbaal</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 20mm;
+      }
+      body {
+        font-family: "Courier New", Courier, monospace;
+        margin: 0;
+        padding: 0;
+      }
+
+      .header {
+        color: black;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      .header .eenheid {
+        margin-left: 0;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: left;
+        width: 100%;
+      }
+
+      .header img {
+        width: 280px;
+        vertical-align: middle;
+      }
+
+      .header h1 {
+        display: inline;
+        margin-left: 10px;
+      }
+
+      .header h5 {
+        display: inline;
+        margin-left: 10px;
+        text-align: center;
+      }
+
+      .a4-page {
+        width: 210mm;
+        margin: 20px auto;
+        padding: 20mm;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        box-sizing: border-box;
+        background-color: #ffffff;
+        border: 1px solid #ddd;
+      }
+      .section-title {
+        font-weight: bold;
+        margin-top: 20px;
+      }
+
+      .content {
+        margin-top: 10px;
+      }
+
+      .content div {
+        margin-bottom: 10px;
+      }
+
+      .underline {
+        text-decoration: underline;
+      }
+
+      /* Dividing line style */
+      .divider {
+        margin: 20px 0;
+        border-top: 1px solid #000;
+      }
+
+      .footer {
+        margin-top: 30px;
+        font-size: 12px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <img src="{{ IMG_PATH }}" alt="Politie Logo" />
+      <div class="eenheid">Eenheid: Aqua</div>
+      <div class="eenheid">District: Midden Nederland</div>
+      <div class="eenheid">Basisteam: Centrum</div>
+      <h5>
+        P R O C E S-V E R B A A L<br />
+        Verhoor van verdachte
+      </h5>
+    </div>
+
+    <div class="container">
+      <div class="content">
+        <div class="underline">{{PVNUMMER}}</div>
+
+        <div class="content">
+          op {{DATUM}}, omstreeks {{TIJD}} uur, <br />
+          Hoorden wij, {% for VERBALISANT in VERBALISANTEN %}
+          <div>{{ VERBALISANT }}</div>
+          {% endfor %}
+          <div>in het bureau van politie te {{LOCATIE}}</div>
+          als verdachte een man die opgaf te zijn:
+          <p>{{VERDACHTE}}</p>
+          <p>
+            Geboren op {{GEBOORTEDAG}} te {{GEBOORTESTAD}} <br />
+            wonende {{WOONADRES}} te {{WOONSTAD}}
+          </p>
+        </div>
+
+        <!-- Dividing line -->
+        <div class="divider"></div>
+
+        <div class="content">
+          <div class="section-title"></div>
+          <div>
+            <p>
+              Nadat verdachte werd meegedeeld waarvan deze werd verdacht en dat
+              hij niet tot antwoorden verplicht was verklaarde deze:
+            </p>
+            <p>{{VERKLARING}}</p>
+          </div>
+        </div>
+
+        <div class="footer">
+          <div>
+            <div><strong>Ondertekend door</strong>:</div>
+            <br />
+            <p><strong>--------------------------------------------</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

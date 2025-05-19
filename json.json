@@ -1,0 +1,84 @@
+{
+  "output": {
+    "guid": "3db8292f-984f-4f93-94e2-5e9dce14d530",
+    "segments": [
+      {
+        "text": "Hello, how are you?",
+        "startTimeSeconds": 32.12,
+        "endTimeSeconds": 42.12,
+        "durationSeconds": 10.0,
+        "speaker": 1,
+        "words": [
+          {
+            "text": "Hello",
+            "startTimeSeconds": 32.12,
+            "endTimeSeconds": 32.72,
+            "durationSeconds": 0.6
+          },
+          {
+            "text": "how",
+            "startTimeSeconds": 32.72,
+            "endTimeSeconds": 32.92,
+            "durationSeconds": 0.2
+          },
+          {
+            "text": "are",
+            "startTimeSeconds": 32.92,
+            "endTimeSeconds": 33.12,
+            "durationSeconds": 0.2
+          },
+          {
+            "text": "you?",
+            "startTimeSeconds": 33.12,
+            "endTimeSeconds": 33.72,
+            "durationSeconds": 0.6
+          }
+        ],
+        "confidence": 0.95,
+        "tags": ["greeting", "question"]
+      }
+    ],
+    "alternatives": [
+      [
+        {
+          "text": "Hi, how are you?",
+          "startTimeSeconds": 32.12,
+          "endTimeSeconds": 42.12,
+          "durationSeconds": 10.0,
+          "speaker": 1,
+          "words": [
+            {
+              "text": "Hi",
+              "startTimeSeconds": 32.12,
+              "endTimeSeconds": 32.42,
+              "durationSeconds": 0.3
+            },
+            {
+              "text": "how",
+              "startTimeSeconds": 32.42,
+              "endTimeSeconds": 32.62,
+              "durationSeconds": 0.2
+            },
+            {
+              "text": "are",
+              "startTimeSeconds": 32.62,
+              "endTimeSeconds": 32.82,
+              "durationSeconds": 0.2
+            },
+            {
+              "text": "you?",
+              "startTimeSeconds": 32.82,
+              "endTimeSeconds": 33.42,
+              "durationSeconds": 0.6
+            }
+          ],
+          "confidence": 0.85,
+          "tags": ["greeting", "question"]
+        }
+      ]
+    ],
+    "startTimeSeconds": 32.12,
+    "endTimeSeconds": 42.12,
+    "durationSeconds": 10.0
+  }
+}
