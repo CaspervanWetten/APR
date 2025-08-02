@@ -59,25 +59,232 @@ function renderTable(data) {
     const tr = document.createElement("tr");
     const tdFilename = document.createElement("td");
     const tdDate = document.createElement("td");
+    const tdModel = document.createElement("td");
     const tdAction = document.createElement("td");
 
     tr.dataset.filename = item.filename;
     tdFilename.textContent = item.filename;
+    tdFilename.className = "th-id";
+    tdModel.textContent = item.model;
 
     // Match on status values
     switch (item.status) {
       case "done":
-        tdDate.textContent = "Done";
+        tdDate.textContent = item.created_at;
+
+        // Create the View button
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "btn btn-primary mb-3";
-        btn.textContent = "Download";
+        btn.textContent = "View";
+
+        // Modal container (only create once)
+        let modal = document.getElementById("textEditorModal");
+        if (!modal) {
+          modal = document.createElement("div");
+          modal.id = "textEditorModal";
+          modal.style.position = "fixed";
+          modal.style.top = "50%";
+          modal.style.left = "50%";
+          modal.style.transform = "translate(-50%, -50%)";
+          modal.style.backgroundColor = "white";
+          modal.style.padding = "20px";
+          modal.style.border = "1px solid #ccc";
+          modal.style.borderRadius = "8px";
+          modal.style.boxShadow = "0 2px 10px rgba(0,0,0,0.2)";
+          modal.style.zIndex = "1000";
+          modal.style.display = "none";
+          modal.style.width = "90%";
+          modal.style.maxWidth = "900px";
+          modal.style.maxHeight = "90%";
+          modal.style.overflowY = "auto";
+
+          // Info fields container
+          const infoContainer = document.createElement("div");
+          infoContainer.id = "modalInfoContainer";
+          infoContainer.style.marginBottom = "15px";
+          modal.appendChild(infoContainer);
+
+          // Proces-verbaal textarea
+          const textarea = document.createElement("textarea");
+          textarea.id = "editorTextarea";
+          textarea.style.width = "100%";
+          textarea.style.height = "300px";
+          modal.appendChild(textarea);
+
+          // Button container
+          const buttonContainer = document.createElement("div");
+          buttonContainer.style.marginTop = "15px";
+          buttonContainer.style.display = "flex";
+          buttonContainer.style.justifyContent = "space-between";
+          buttonContainer.style.flexWrap = "wrap";
+          modal.appendChild(buttonContainer);
+
+          // Save button (blue)
+          const saveBtn = document.createElement("button");
+          saveBtn.textContent = "Save";
+          saveBtn.className = "btn btn-primary mb-2";
+          saveBtn.style.marginRight = "10px";
+          saveBtn.addEventListener("click", () => {
+            const updatedData = {
+              ID: document.getElementById("inputID").value,
+              datum: document.getElementById("inputDatum").value,
+              tijd: document.getElementById("inputTijd").value,
+              verdachte: document.getElementById("inputVerdachte").value,
+              geboortedag: document.getElementById("inputGeboortedag").value,
+              geboortestad: document.getElementById("inputGeboortestad").value,
+              woonadres: document.getElementById("inputWoonadres").value,
+              woonstad: document.getElementById("inputWoonstad").value,
+              locatie: document.getElementById("inputLocatie").value,
+              verbalisanten:
+                document.getElementById("inputVerbalisanten").value,
+              proces_verbaal: document.getElementById("editorTextarea").value,
+            };
+            console.log("Saved data:", updatedData); // replace this with logic to persist the changes
+            ws.send(
+              JSON.stringify({ action: "update-pv-information", updatedData })
+            );
+
+            // Create and show temporary "Saved" popup
+            const popup = document.createElement("div");
+            popup.textContent = "✔️ Opgeslagen";
+            popup.style.position = "fixed";
+            popup.style.bottom = "20px";
+            popup.style.right = "20px";
+            popup.style.backgroundColor = "#28a745";
+            popup.style.color = "white";
+            popup.style.padding = "10px 16px";
+            popup.style.borderRadius = "5px";
+            popup.style.boxShadow = "0 2px 6px rgba(0,0,0,0.2)";
+            popup.style.fontSize = "16px";
+            popup.style.zIndex = "2000";
+            popup.style.opacity = "1";
+            popup.style.transition = "opacity 1s ease";
+
+            document.body.appendChild(popup);
+
+            // Fade out and remove after 2 seconds
+            setTimeout(() => {
+              popup.style.opacity = "0";
+              setTimeout(() => {
+                popup.remove();
+              }, 1000);
+            }, 1500);
+          });
+          buttonContainer.appendChild(saveBtn);
+
+          // Generate Report button (orange)
+          const generateBtn = document.createElement("button");
+          generateBtn.textContent = "Generate Report";
+          generateBtn.className = "btn mb-2";
+          generateBtn.style.backgroundColor = "orange";
+          generateBtn.style.color = "white";
+          generateBtn.addEventListener("click", () => {
+            const updatedData = {
+              ID: document.getElementById("inputID").value,
+              datum: document.getElementById("inputDatum").value,
+              tijd: document.getElementById("inputTijd").value,
+              verdachte: document.getElementById("inputVerdachte").value,
+              geboortedag: document.getElementById("inputGeboortedag").value,
+              geboortestad: document.getElementById("inputGeboortestad").value,
+              woonadres: document.getElementById("inputWoonadres").value,
+              woonstad: document.getElementById("inputWoonstad").value,
+              locatie: document.getElementById("inputLocatie").value,
+              verbalisanten:
+                document.getElementById("inputVerbalisanten").value,
+              proces_verbaal: document.getElementById("editorTextarea").value,
+            };
+            ws.send(
+              JSON.stringify({ action: "update-pv-information", updatedData })
+            );
+            ws.send(JSON.stringify({ action: "generateReport", ID: updatedData.ID }));
+
+            // Create and show temporary "Saved" popup
+            const popup = document.createElement("div");
+            popup.textContent = "!Generating!";
+            popup.style.position = "fixed";
+            popup.style.bottom = "20px";
+            popup.style.right = "20px";
+            popup.style.backgroundColor = "#24a745";
+            popup.style.color = "white";
+            popup.style.padding = "10px 16px";
+            popup.style.borderRadius = "5px";
+            popup.style.boxShadow = "0 2px 6px rgba(0,0,0,0.2)";
+            popup.style.fontSize = "16px";
+            popup.style.zIndex = "2000";
+            popup.style.opacity = "1";
+            popup.style.transition = "opacity 1s ease";
+
+            document.body.appendChild(popup);
+
+            // Fade out and remove after 2 seconds
+            setTimeout(() => {
+              popup.style.opacity = "0";
+              setTimeout(() => {
+                popup.remove();
+              }, 1000);
+            }, 1500);
+
+          });
+          buttonContainer.appendChild(generateBtn);
+
+          // Close button
+          const closeBtn = document.createElement("button");
+          closeBtn.textContent = "Close";
+          closeBtn.className = "btn btn-secondary mt-2";
+          closeBtn.style.marginLeft = "auto";
+          closeBtn.addEventListener("click", () => {
+            modal.style.display = "none";
+          });
+          buttonContainer.appendChild(closeBtn);
+
+          document.body.appendChild(modal);
+        }
+
+        // Show editor with item.text on click
         btn.addEventListener("click", () => {
-          const url = `${window.location.origin}/download/${encodeURIComponent(
-            item.filename
-          )}`;
-          window.open(url, "_blank");
+          const infoContainer = document.getElementById("modalInfoContainer");
+          infoContainer.innerHTML = `
+            <label><strong>ID (filename):</strong> <textarea id="inputID" class="form-control mb-2" readonly>${
+              item.filename || ""
+            }</textarea>
+            </label>
+            <label><strong>Datum:</strong><textarea id="inputDatum" class="form-control mb-2">${
+              item.datum || ""
+            }</textarea></label>
+            <label><strong>Tijd:</strong><textarea id="inputTijd" class="form-control mb-2">${
+              item.tijd || ""
+            }</textarea></label>
+            <label><strong>Verdachte:</strong><textarea id="inputVerdachte" class="form-control mb-2">${
+              item.verdachte || ""
+            }</textarea></label>
+            <label><strong>Geboortedatum:</strong><textarea id="inputGeboortedag" class="form-control mb-2">${
+              item.geboortedag || ""
+            }</textarea></label>
+            <label><strong>Geboortestad:</strong><textarea id="inputGeboortestad" class="form-control mb-2">${
+              item.geboortestad || ""
+            }</textarea></label>
+            <label><strong>Woonadres:</strong><textarea id="inputWoonadres" class="form-control mb-2">${
+              item.woonadres || ""
+            }</textarea></label>
+            <label><strong>Woonstad:</strong><textarea id="inputWoonstad" class="form-control mb-2">${
+              item.woonstad || ""
+            }</textarea></label>
+            <label><strong>Locatie verhoor:</strong><textarea id="inputLocatie" class="form-control mb-2">${
+              item.locatie || ""
+            }</textarea></label>
+            <label><strong>Verbalisanten:</strong><textarea id="inputVerbalisanten" class="form-control mb-2">${
+              item.verbalisanten || ""
+            }</textarea></label>
+          `;
+
+          const textarea = document.getElementById("editorTextarea");
+          textarea.value =
+            item?.proces_verbaal || "Geen proces-verbaal beschikbaar.";
+
+          modal.style.display = "block";
         });
+
         tdAction.appendChild(btn);
         break;
 
@@ -107,7 +314,7 @@ function renderTable(data) {
         tdAction.innerHTML = `<span class="ms-2">${item.status}</span>`;
     }
 
-    tr.append(tdFilename, tdDate, tdAction);
+    tr.append(tdFilename, tdDate, tdModel, tdAction);
     tbody.appendChild(tr);
   });
 }

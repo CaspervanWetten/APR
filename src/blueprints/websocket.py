@@ -3,7 +3,7 @@ from saje import SajeClient
 from uuid import uuid4
 from prompting.engine import PromptingEngine
 from setup_env import API_DICT
-from APR import GenerateReport, move_file
+from APR import GenerateReport, move_file, update_metadata, create_pdf_report
 import ujson
 import asyncio
 import os
@@ -14,73 +14,81 @@ import datetime
 ws = Blueprint("ws")
 engine = PromptingEngine(API_DICT, "src/prompting/templates.json")
 
-import os
-import datetime
-import ujson
-
 async def handle_pv_update(ws):
-    pdf_files = []
     tmp_files = []
     error_files = []
     payload_data = []
-    directory = "./data/verwerkt/"
+
     tmp_directory = "./tmp/"
     error_directory = "./tmp/error/"
-    
-    # Ensure the directories exist
-    if not os.path.isdir(directory):
-        raise ValueError(f"'{directory}' is not a directory or does not exist.")
+    meta_data_path = "./data/meta_data.json"
+
+    # Load metadata JSON
+    try:
+        with open(meta_data_path, "r", encoding="utf-8") as f:
+            meta_data = ujson.load(f)
+    except FileNotFoundError:
+        print(f"Warning: meta_data.json not found at {meta_data_path}")
+        meta_data = {}
+    except Exception as e:
+        print(f"Error loading meta_data.json: {e}")
+        meta_data = {}
+
+    # Ensure directories exist
     if not os.path.isdir(tmp_directory):
         raise ValueError(f"'{tmp_directory}' is not a directory or does not exist.")
     if not os.path.isdir(error_directory):
         raise ValueError(f"'{error_directory}' is not a directory or does not exist.")
 
-    for entry in os.listdir(directory):
-        if entry.lower().endswith('.pdf'):
-            full_path = os.path.join(directory, entry)
-            try:
-                # Get the creation time (on Unix this reflects metadata change)
-                ctime = os.path.getctime(full_path)
-                creation_date = datetime.datetime.fromtimestamp(ctime)
-            except Exception as e:
-                # In case of any issue getting ctime, skip the file or log the error
-                print(f"Warning: Could not get creation date for {entry}: {e}")
-                continue
-            pdf_files.append((entry, creation_date))
-    
-    # Collect files from the tmp directory with "working" status
+    # Collect files with "done" status from metadata
+    for path, data in meta_data.items():
+        filename = os.path.basename(path)
+        creation_date = data.get("creation_date") or data.get("created_at")
+        try:
+            # Normalize to ISO format if needed
+            if isinstance(creation_date, str):
+                creation_date = datetime.datetime.fromisoformat(creation_date).isoformat()
+            elif isinstance(creation_date, datetime.datetime):
+                creation_date = creation_date.isoformat()
+            else:
+                creation_date = datetime.datetime.now().isoformat()
+        except Exception:
+            creation_date = datetime.datetime.now().isoformat()
+
+        payload_item = {
+            "filename": filename,
+            "status": "done",
+            "creation_date": creation_date,
+            **data
+        }
+        payload_data.append(payload_item)
+
+    # Collect working and error files
     for entry in os.listdir(tmp_directory):
         full_path = os.path.join(tmp_directory, entry)
         if os.path.isfile(full_path):
-            tmp_files.append((entry, "working"))
+            meta = meta_data.get(full_path, {})
+            payload_data.append({
+                "filename": entry,
+                "status": "working",
+                **meta
+            })
 
-    # Collect files from the tmp/error directory with "error" status
     for entry in os.listdir(error_directory):
         full_path = os.path.join(error_directory, entry)
         if os.path.isfile(full_path):
-            error_files.append((entry, "error"))
+            meta = meta_data.get(full_path, {})
+            payload_data.append({
+                "filename": entry,
+                "status": "error",
+                **meta
+            })
 
-    # Send the response via WebSocket
-    if not pdf_files and not tmp_files and not error_files:
+    # Send payload
+    if not payload_data:
         await ws.send(ujson.dumps({"response": "pv-update", "data": "none"}))
     else:
-        # Extend the payload data 
-        payload_data.extend(
-            {"filename": filename, "status" : "done", "creation_date": creation_date.isoformat()}
-            for filename, creation_date in pdf_files
-        )
-        payload_data.extend(
-            {"filename": filename, "status": status}
-            for filename, status in tmp_files
-        )
-        payload_data.extend(
-            {"filename":filename, "status": status}
-             for filename, status in error_files
-        )
-        
-        # Send the full payload
         await ws.send(ujson.dumps({"response": "pv-update", "data": payload_data}))
-
 
 async def monitor_job(job_id: str, ws: Websocket, shared_status: dict):
     """
@@ -165,7 +173,17 @@ async def ws_job(request: Request, ws: Websocket, id: str, saje_client: SajeClie
             case "pv-individual-retry":
                 file = ujson.loads(data).get("file", None)
                 move_file(f"./tmp/error/{file}", "./tmp/")
-                saje_client.send(file, GenerateReport, "Generating Proces-verbaal PDF", f"./tmp/{file}")
+                saje_client.send(file, GenerateReport, "Updating MetaData.json", f"./tmp/{file}")
+                continue
+
+            case "update-pv-information":
+                updated_data = ujson.loads(data).get("updatedData")
+                update_metadata(updated_data)
+                continue
+
+            case "generateReport":
+                ID = ujson.loads(data).get("ID", None)
+                saje_client.send(ID, create_pdf_report, "Generating Proces-verbaal PDF", ID)
                 continue
 
             case _:

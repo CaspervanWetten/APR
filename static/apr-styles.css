@@ -61,3 +61,10 @@ body {
   text-align: center;
 }
 
+.th-id {
+  width: 20px;
+  max-width: 5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

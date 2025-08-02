@@ -43,7 +43,7 @@
                 <form
                   enctype="multipart/form-data"
                   onsubmit="saveConfig(event)"
-				  method="post"
+                  method="post"
                 >
                   <!-- hidden native file input -->
                   <input
@@ -60,7 +60,7 @@
                     Selecteer uw tekst
                   </label>
                 </form>
-                <small class="text-muted">APV ondersteunt: .docx, .txt</small>
+                <small class="text-muted">APV ondersteunt: .txt</small>
               </div>
               <div class="card-footer text-center">
                 <!-- <button class="btn btn-outline-secondary">
@@ -78,13 +78,13 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th>ID</th>
-                      <th>Datum</th>
-					  <th>Download</th>
+                      <th class="th-id">ID</th>
+                      <th>DateTime</th>
+                      <th>Language model</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
-                  <tbody id="pv-table-body">
-                  </tbody>
+                  <tbody id="pv-table-body"></tbody>
                 </table>
               </div>
             </div>
