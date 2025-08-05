@@ -17,6 +17,14 @@ async def download(request: Request, job_id: str):
         return await file(file_path, filename=f"{job_id}", mime_type="text/plain")
     return text("File not found")
 
+
+@epts.get("/data/verwerkt/<job_id>")
+async def download_d_v(request: Request, job_id: str):
+    file_path = f"./data/verwerkt/{job_id}"
+    if os.path.exists(file_path):
+        return await file(file_path, filename=f"{job_id}", mime_type="text/plain")
+    return text("File not found")
+
 @epts.post("/upload/<job_id>",)
 async def upload(request: Request, job_id: str, saje_client: SajeClient):
     formData = request.form

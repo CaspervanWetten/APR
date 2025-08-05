@@ -2,6 +2,7 @@ const ws = new WebSocket("ws://localhost:8080/ws/APR");
 const tbody = document.getElementById("pv-table-body");
 const retryInFlight = new Set();
 let noneSeen = false;
+let currentData = null;
 
 // ==============
 // INDIVIDUAL FILE RETRYING
@@ -126,7 +127,7 @@ function renderTable(data) {
           saveBtn.className = "btn btn-primary mb-2";
           saveBtn.style.marginRight = "10px";
           saveBtn.addEventListener("click", () => {
-            const updatedData = {
+            currentData = {
               ID: document.getElementById("inputID").value,
               datum: document.getElementById("inputDatum").value,
               tijd: document.getElementById("inputTijd").value,
@@ -140,9 +141,9 @@ function renderTable(data) {
                 document.getElementById("inputVerbalisanten").value,
               proces_verbaal: document.getElementById("editorTextarea").value,
             };
-            console.log("Saved data:", updatedData); // replace this with logic to persist the changes
+            console.log("Saved data:", currentData); // replace this with logic to persist the changes
             ws.send(
-              JSON.stringify({ action: "update-pv-information", updatedData })
+              JSON.stringify({ action: "update-pv-information", currentData })
             );
 
             // Create and show temporary "Saved" popup
@@ -180,7 +181,7 @@ function renderTable(data) {
           generateBtn.style.backgroundColor = "orange";
           generateBtn.style.color = "white";
           generateBtn.addEventListener("click", () => {
-            const updatedData = {
+            currentData = {
               ID: document.getElementById("inputID").value,
               datum: document.getElementById("inputDatum").value,
               tijd: document.getElementById("inputTijd").value,
@@ -194,10 +195,16 @@ function renderTable(data) {
                 document.getElementById("inputVerbalisanten").value,
               proces_verbaal: document.getElementById("editorTextarea").value,
             };
+            console.log("Saved data:", currentData); // replace this with logic to persist the changes
             ws.send(
-              JSON.stringify({ action: "update-pv-information", updatedData })
+              JSON.stringify({ action: "update-pv-information", currentData })
             );
-            ws.send(JSON.stringify({ action: "generateReport", ID: updatedData.ID }));
+            setTimeout(function () {
+              downloadPDF(
+                "data/verwerkt/" + currentData.ID,
+                currentData.ID + "pdf"
+              );
+            }, 2000);
 
             // Create and show temporary "Saved" popup
             const popup = document.createElement("div");
@@ -224,7 +231,6 @@ function renderTable(data) {
                 popup.remove();
               }, 1000);
             }, 1500);
-
           });
           buttonContainer.appendChild(generateBtn);
 
@@ -285,16 +291,79 @@ function renderTable(data) {
           modal.style.display = "block";
         });
 
+        // Create the Delete button
+        const deleteBtn = document.createElement("button");
+        deleteBtn.type = "button";
+        deleteBtn.className = "btn btn-danger mb-3 ms-2"; // red button with left spacing
+        deleteBtn.textContent = "Delete";
+
+        // Delete button logic
+        deleteBtn.addEventListener("click", () => {
+          // Immediately show spinner in the row
+          tdAction.innerHTML = `
+    <div class="spinner-border spinner-border-sm" role="status">
+      <span class="visually-hidden">Deleting...</span>
+    </div>
+    <span class="ms-2">verwijderen...</span>
+  `;
+
+          // Send WebSocket message
+          ws.send(
+            JSON.stringify({
+              action: "delete-pv",
+              filename: item.filename,
+            })
+          );
+          setTimeout(function () {
+            ws.send(
+              JSON.stringify({
+                action: "pv-update",
+              })
+            );
+          }, 2000);
+        });
+
         tdAction.appendChild(btn);
+        tdAction.appendChild(deleteBtn);
         break;
 
       case "working":
-        tdAction.innerHTML = `
-          <div class="spinner-border spinner-border-sm" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-          <span class="ms-2">${item.status}</span>
-        `;
+        // Spinner
+        const spinner = document.createElement("div");
+        spinner.className = "spinner-border spinner-border-sm";
+        spinner.role = "status";
+        spinner.innerHTML = `<span class="visually-hidden">Loading...</span>`;
+
+        // Status text
+        const statusText = document.createElement("span");
+        statusText.className = "ms-2";
+        statusText.textContent = item.status;
+
+        // Cancel button
+        const cancelBtn = document.createElement("button");
+        cancelBtn.type = "button";
+        cancelBtn.className = "btn btn-warning btn-sm ms-3";
+        cancelBtn.textContent = "Cancel";
+        cancelBtn.addEventListener("click", () => {
+          tdAction.innerHTML = `
+    <div class="spinner-border spinner-border-sm" role="status">
+      <span class="visually-hidden">Cancelling...</span>
+    </div>
+    <span class="ms-2">cancelling...</span>
+  `;
+          ws.send(
+            JSON.stringify({
+              action: "cancel-task",
+              filename: item.filename,
+            })
+          );
+          console.log("Cancel sent for", item.filename);
+        });
+
+        // Append all
+        tdAction.appendChild(spinner);
+        tdAction.appendChild(statusText);
+        tdAction.appendChild(cancelBtn);
         break;
 
       case "error":
@@ -306,6 +375,32 @@ function renderTable(data) {
         retryBtn.addEventListener("click", () => {
           retryFile(item.filename);
         });
+
+        // Create the Delete button
+        const deleteBtn2 = document.createElement("button");
+        deleteBtn2.type = "button";
+        deleteBtn2.className = "btn btn-danger mb-3 ms-2"; // red button with left spacing
+        deleteBtn2.textContent = "Delete";
+
+        // Delete button logic
+        deleteBtn2.addEventListener("click", () => {
+          // Immediately show spinner in the row
+          tdAction.innerHTML = `
+    <div class="spinner-border spinner-border-sm" role="status">
+      <span class="visually-hidden">Deleting...</span>
+    </div>
+    <span class="ms-2">verwijderen...</span>
+  `;
+
+          // Send WebSocket message
+          ws.send(
+            JSON.stringify({
+              action: "delete-unfinished-pv",
+              filename: item.filename,
+            })
+          );
+        });
+        tdAction.appendChild(deleteBtn2);
         tdAction.appendChild(retryBtn);
         break;
 
@@ -317,6 +412,18 @@ function renderTable(data) {
     tr.append(tdFilename, tdDate, tdModel, tdAction);
     tbody.appendChild(tr);
   });
+}
+
+// ===============
+// Download PV
+// ===============
+function downloadPDF(url, filename) {
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = filename || "";
+  document.body.appendChild(anchor);
+  anchor.click();
+  document.body.removeChild(anchor);
 }
 
 // ===============
@@ -377,25 +484,105 @@ window.addEventListener("DOMContentLoaded", () => {
 function saveConfig(event) {
   event.preventDefault();
 
-  const UUID = crypto.randomUUID();
-  const fileInput = document.getElementById("input_file");
-  const file = fileInput.files[0];
+  // Create the upload popup
+  const popup = document.createElement("div");
+  popup.style.position = "fixed";
+  popup.style.top = "50%";
+  popup.style.left = "50%";
+  popup.style.transform = "translate(-50%, -50%)";
+  popup.style.backgroundColor = "white";
+  popup.style.padding = "20px";
+  popup.style.border = "1px solid #ccc";
+  popup.style.borderRadius = "8px";
+  popup.style.boxShadow = "0 2px 10px rgba(0,0,0,0.2)";
+  popup.style.zIndex = "2000";
+  popup.style.minWidth = "300px";
 
-  const config = { UUID };
-  const formData = new FormData();
-  formData.append("file", file);
-  formData.append("config", JSON.stringify(config));
+  // Popup content
+  popup.innerHTML = `
+    <h5>Select Upload Options</h5>
+    <div class="mb-3">
+      <label for="popup_file_input" class="form-label">File</label>
+      <input type="file" id="popup_file_input" class="form-control">
+    </div>
+    <div class="form-check mb-3">
+      <input class="form-check-input" type="checkbox" id="boolCheck">
+      <label class="form-check-label" for="boolCheck">
+        Operationele data?
+      </label>
+    </div>
+    <div class="mb-3">
+      <label for="modelSelect" class="form-label">Select Model</label>
+      <select id="modelSelect" class="form-select">
+        <!-- options will be populated dynamically -->
+      </select>
+    </div>
+    <div class="d-flex justify-content-end">
+      <button id="popupSubmitBtn" class="btn btn-primary me-2">Submit</button>
+      <button id="popupCancelBtn" class="btn btn-secondary">Cancel</button>
+    </div>
+  `;
 
-  fetch(`/upload/${UUID}`, {
-    method: "POST",
-    body: formData,
-  })
-    .then(() => {
-      sessionStorage.setItem("uuid", UUID);
-      // immediately refresh table
-      ws.send(JSON.stringify({ action: "pv-update" }));
-    })
-    .catch((err) => {
-      console.error("Upload failed", err);
+  // Append popup to body
+  document.body.appendChild(popup);
+
+  // Populate model dropdown based on checkbox
+  const modelSelect = popup.querySelector("#modelSelect");
+  const boolCheck = popup.querySelector("#boolCheck");
+  const updateModelOptions = () => {
+    modelSelect.innerHTML = ""; // Clear existing options
+    const options = boolCheck.checked
+      ? ["DeepSeek-R1-Quantized-Qwen"]
+      : ["gpt-4o"];
+
+    options.forEach((model) => {
+      const opt = document.createElement("option");
+      opt.value = model;
+      opt.textContent = model;
+      modelSelect.appendChild(opt);
     });
+  };
+  boolCheck.addEventListener("change", updateModelOptions);
+  updateModelOptions(); // Initial population
+
+  // Handle submission
+  popup.querySelector("#popupSubmitBtn").addEventListener("click", () => {
+    const popupFileInput = popup.querySelector("#popup_file_input");
+    const file =
+      popupFileInput.files[0] || document.getElementById("input_file").files[0];
+    if (!file) {
+      alert("Please select a file.");
+      return;
+    }
+
+    const UUID = crypto.randomUUID();
+    const config = {
+      UUID,
+      advanced: boolCheck.checked,
+      model: modelSelect.value,
+    };
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("config", JSON.stringify(config));
+
+    fetch(`/upload/${UUID}`, {
+      method: "POST",
+      body: formData,
+    })
+      .then(() => {
+        sessionStorage.setItem("uuid", UUID);
+        ws.send(JSON.stringify({ action: "pv-update" }));
+        popup.remove();
+      })
+      .catch((err) => {
+        console.error("Upload failed", err);
+        alert("Upload failed. See console.");
+      });
+  });
+
+  // Cancel button
+  popup.querySelector("#popupCancelBtn").addEventListener("click", () => {
+    popup.remove();
+  });
 }

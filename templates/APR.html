@@ -40,26 +40,10 @@
               <div class="card-body text-center">
                 <!--File upload -->
 
-                <form
-                  enctype="multipart/form-data"
-                  onsubmit="saveConfig(event)"
-                  method="post"
-                >
-                  <!-- hidden native file input -->
-                  <input
-                    type="file"
-                    id="input_file"
-                    name="input_file"
-                    required
-                    hidden
-                    onchange="this.form.requestSubmit()"
-                  />
-
                   <!-- styled label acting as the “Choose file” button -->
-                  <label for="input_file" class="btn btn-primary mb-3">
+                  <label onclick="saveConfig(event)" class="btn btn-primary mb-3">
                     Selecteer uw tekst
                   </label>
-                </form>
                 <small class="text-muted">APV ondersteunt: .txt</small>
               </div>
               <div class="card-footer text-center">

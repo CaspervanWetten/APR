@@ -3,7 +3,7 @@ from saje import SajeClient
 from uuid import uuid4
 from prompting.engine import PromptingEngine
 from setup_env import API_DICT
-from APR import GenerateReport, move_file, update_metadata, create_pdf_report
+from APR import GenerateReport, move_file, update_metadata, create_pdf_report, delete_metadata_entry, remove_file
 import ujson
 import asyncio
 import os
@@ -112,11 +112,18 @@ async def monitor_job(job_id: str, ws: Websocket, shared_status: dict):
                 await ws.send(ujson.dumps({"response": "done", "data": job.get("res")}))
                 break
 
+            case "report":
+                # return the links where the reports can be fetched
+                download_link = "http://127.0.0.1:8080/" + job.get("res", "")
+                await ws.send(ujson.dumps({"response": "report", "data": download_link}))
+                break
+
             case "error":
-                await ws.send(ujson.dumps({"response": "error", "data": f"error {job.get("error")} occurred, please try again"}))
+                await ws.send(ujson.dumps({"response": "error", "data": f"error {job.get("error")} occurred, uwu try again"}))
                 break
             
             case _: 
+                print("UWU")
                 await ws.send(ujson.dumps({"response": "error", "data": "Unknown error occurred, please try again"}))
 
 
@@ -177,17 +184,38 @@ async def ws_job(request: Request, ws: Websocket, id: str, saje_client: SajeClie
                 continue
 
             case "update-pv-information":
-                updated_data = ujson.loads(data).get("updatedData")
+                updated_data = ujson.loads(data)['currentData']
+                ID = updated_data["ID"]
+                if not updated_data:
+                    continue
                 update_metadata(updated_data)
+                saje_client.send(ID, create_pdf_report, "creating pdf after metadata update", ID)
                 continue
 
             case "generateReport":
                 ID = ujson.loads(data).get("ID", None)
-                saje_client.send(ID, create_pdf_report, "Generating Proces-verbaal PDF", ID)
+                saje_client.send(ID, create_pdf_report, "creating pdf after generate_report websocket send", ID)
+                asyncio.create_task(monitor_job(ID, ws, request.app.shared_ctx.job_status))
+                continue
+
+            case "cancel-task":
+                ID = ujson.loads(data).get("filename", None)
+                remove_file(f"./tmp/{ID}")
+                saje_client.send(ID, delete_metadata_entry, "deleting metadata entry of cancelled task", ID)
+                continue
+
+            case "delete-pv":
+                ID = ujson.loads(data).get("filename", None)
+                delete_metadata_entry(ID)
+                continue
+                
+            case "delete-unfinished-pv":
+                ID = ujson.loads(data).get("filename", None)
+                remove_file(f"./tmp/error/{ID}")
                 continue
 
             case _:
-                print(data)
+                print(f"unknown communication: {data}")
                 await ws.send(ujson.dumps({"response": "error", "data" : "Unexpected communication"}))
                 continue
                 

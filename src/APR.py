@@ -36,7 +36,7 @@ def store_information(file_path, information):
     file_id = filename + ".pdf"
 
     metadata = {
-        "model": "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B",
+        "model": "openAI/ChatGPT4o",
         "ID": file_id,
         "original_filename": filename,
         "created_at": str(datetime.now())
@@ -145,6 +145,37 @@ def update_metadata(updated_entry: dict, meta_path="./data/meta_data.json"):
     with open(meta_path, "w", encoding="utf-8") as f:
         ujson.dump(metadata, f, indent=2)
 
+
+def delete_metadata_entry(file_id: str, meta_path="./data/meta_data.json") -> bool:
+    """
+    Deletes an entry from meta_data.json by its ID (e.g., filename.pdf).
+    Returns True if deletion was successful, False otherwise.
+    """
+    if not os.path.exists(meta_path):
+        print(f"[delete_metadata_entry] File not found: {meta_path}")
+        return False
+
+    try:
+        with open(meta_path, "r", encoding="utf-8") as f:
+            metadata = json.load(f)
+    except Exception as e:
+        print(f"[delete_metadata_entry] Error reading metadata: {e}")
+        return False
+
+    del metadata[file_id]
+
+    try:
+        with open(meta_path, "w", encoding="utf-8") as f:
+            json.dump(metadata, f, indent=2)
+        print(f"[delete_metadata_entry] Deleted ID: {file_id}")
+        return True
+    except Exception as e:
+        print(f"[delete_metadata_entry] Error writing metadata: {e}")
+        return False
+
+
+
+
 def remove_file(file):
     """Function to remove the file after processing."""
     try:
@@ -168,9 +199,10 @@ def html_to_pdf(html_string, file):
     return output_pdf_path
 
 
-def extractInformation(file):
-    """Extracts structured information from a raw text file."""
+def extractInformation(file, cancel_event=None):
+    """Extracts structured information from a raw text file, with optional cancellation."""
     engine = PromptingEngine(API_DICT, "src/prompting/templates.json")
+    
     with open(file, 'r') as f:
         verhoor = f.read()
 
@@ -187,9 +219,19 @@ def extractInformation(file):
     }
 
     information = {}
+
     for key, prompt_text in prompts.items():
+        if cancel_event and cancel_event.is_set():
+            print(f"[extractInformation] Cancelled during '{key}' extraction.")
+            return None  # or: return information to keep partial results
+
         prompt = f"{prompt_text}\n\n\nVerhoor:\n{verhoor}"
         information[key] = engine.generate_response("verhoor-vragen-gpt-4o", prompt=prompt)
+
+    # Final summary generation
+    if cancel_event and cancel_event.is_set():
+        print("[extractInformation] Cancelled before generating proces-verbaal.")
+        return None  # or: return information
 
     information["proces_verbaal"] = engine.generate_response("verhoor-samenvatting-gpt-4o", prompt=verhoor)
 
@@ -199,18 +241,13 @@ def extractInformation(file):
 def buildHtml(information):
     """Builds the HTML for the report from extracted information."""
     image_path = "../static/media/PolitieLogoFullTransparant.png"
-    pattern = r"[titel1]:\s*(.*[a-zA-Z])\s{0,3}---\s{0,3}[titel2]:\s*(.*)"
     
-    verbalisanten_str = information.get("verbalisanten", "")
-    matches = re.findall(pattern, verbalisanten_str)
-    verbalisanten_list = matches[0] if matches else ("", "")
-
     template = env.get_template("pvtemplate.html")
     
     context = {
         "DATUM": information.get("datum"),
         "TIJD": information.get("tijd"),
-        "VERBALISANTEN": verbalisanten_list,
+        "VERBALISANTEN": information.get("verbalisanten"),
         "LOCATIE": information.get("locatie"),
         "VERDACHTE": information.get("verdachte"),
         "GEBOORTEDAG": information.get("geboortedag"),

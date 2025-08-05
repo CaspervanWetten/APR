@@ -16,7 +16,7 @@ from setup_env import APP_ACCES_KEY
 
 
 # Maak de app aan
-app = Sanic("apr_draft_1")
+app = Sanic("apr_draft_2")
 app.static('/static', './static')
 app.blueprint(epts)
 app.blueprint(ws)
