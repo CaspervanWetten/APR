@@ -191,20 +191,58 @@ function renderTable(data) {
               woonadres: document.getElementById("inputWoonadres").value,
               woonstad: document.getElementById("inputWoonstad").value,
               locatie: document.getElementById("inputLocatie").value,
-              verbalisanten:
-                document.getElementById("inputVerbalisanten").value,
+              verbalisanten: document.getElementById("inputVerbalisanten").value,
               proces_verbaal: document.getElementById("editorTextarea").value,
             };
-            console.log("Saved data:", currentData); // replace this with logic to persist the changes
+          
+            // Check for "niet gevonden" values
+            const missingFields = [];
+            for (const [key, value] of Object.entries(currentData)) {
+              if (typeof value === "string" && value.trim().toLowerCase() === "niet gevonden") {
+                missingFields.push(key);
+              }
+            }
+          
+            if (missingFields.length > 0) {
+              console.log("Missing fields:", missingFields);
+              const popup = document.createElement("div");
+              popup.innerHTML = `<strong>Error!</strong><br>Geen resultaat gegeven voor: ${missingFields.join(", ")}`;
+              popup.style.position = "fixed";
+              popup.style.bottom = "20px";
+              popup.style.right = "20px";
+              popup.style.backgroundColor = "#dc3545"; // Bootstrap danger color
+              popup.style.color = "white";
+              popup.style.padding = "12px 18px";
+              popup.style.borderRadius = "6px";
+              popup.style.boxShadow = "0 2px 6px rgba(0,0,0,0.2)";
+              popup.style.fontSize = "16px";
+              popup.style.zIndex = "2000";
+              popup.style.opacity = "1";
+              popup.style.transition = "opacity 1s ease";
+          
+              document.body.appendChild(popup);
+          
+              setTimeout(() => {
+                popup.style.opacity = "0";
+                setTimeout(() => popup.remove(), 1000);
+              }, 3000);
+          
+              return; // Stop further execution if error
+            }
+          
+            // If everything is OK
+            console.log("Saved data:", currentData);
             ws.send(
               JSON.stringify({ action: "update-pv-information", currentData })
             );
+          
             setTimeout(function () {
               downloadPDF(
                 "data/verwerkt/" + currentData.ID,
                 currentData.ID + "pdf"
               );
             }, 2000);
+          
 
             // Create and show temporary "Saved" popup
             const popup = document.createElement("div");
@@ -533,7 +571,7 @@ function saveConfig(event) {
     modelSelect.innerHTML = ""; // Clear existing options
     const options = boolCheck.checked
       ? ["DeepSeek-R1-Quantized-Qwen"]
-      : ["gpt-4o"];
+      : ["gpt-4o", "DeepSeek-R1-Quantized-Qwen"];
 
     options.forEach((model) => {
       const opt = document.createElement("option");
