@@ -5,7 +5,7 @@ function generateUUIDFallback() {
   });
 }
 
-const ws = new WebSocket("ws://localhost:8080/ws/" + (crypto.randomUUID ? crypto.randomUUID() : generateUUIDFallback()));
+const ws = new WebSocket("ws://145.90.76.152:8080/ws/" + (crypto.randomUUID ? crypto.randomUUID() : generateUUIDFallback()));
 const tbody = document.getElementById("pv-table-body");
 const retryInFlight = new Set();
 let noneSeen = false;

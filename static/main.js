@@ -1,4 +1,4 @@
-const ws = new WebSocket("ws://localhost:8080/ws/llama");
+const ws = new WebSocket("ws://145.90.76.152:8080/ws/llama");
 const chatBox = document.querySelector(".chat-box");
 
 ws.onopen = () => {
