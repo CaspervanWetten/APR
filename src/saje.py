@@ -4,7 +4,7 @@ from time import sleep
 def worker(saje_queue: Queue, job_status_dict):
     while True:
         UUID, function, description, args, kwargs = saje_queue.get()
-        job_status_dict[UUID] = {}
+        job_status_dict[UUID] = {"status" : "ongoing"}
 
         try:
 

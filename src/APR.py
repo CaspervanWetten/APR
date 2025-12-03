@@ -4,6 +4,8 @@ import ujson
 import re
 import os
 import shutil
+from uuid import uuid4
+from APRLogger import technical_log, administrative_log
 from prompting.engine import PromptingEngine
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from playwright.sync_api import sync_playwright
@@ -25,7 +27,7 @@ def store_information(file_path, information):
     all_metadata = {}
     if os.path.exists(META_PATH):
         try:
-            with open(META_PATH, "r") as f:
+            with open(META_PATH, "r", encoding="utf-8") as f:
                 content = f.read().strip()
                 if content:
                     all_metadata = json.loads(content)
@@ -35,18 +37,23 @@ def store_information(file_path, information):
     filename = os.path.basename(file_path)
     file_id = filename + ".pdf"
 
+    with open(file_path, 'r') as f:
+        transcriptie = f.read()
+    
+
     metadata = {
-        "model": "openAI/ChatGPT4o",
+        "model": "DeepSeep-AI/DeepSeek-AI-R1-Qwen-Distill-1.5B",
         "ID": file_id,
         "original_filename": filename,
-        "created_at": str(datetime.now())
+        "created_at": str(datetime.now()),
+        "original_input": transcriptie,
     }
 
     metadata.update(information)
 
     all_metadata[file_id] = metadata
 
-    with open(META_PATH, "w") as f:
+    with open(META_PATH, "w", encoding="utf-8") as f:
         json.dump(all_metadata, f, indent=2)
     
     return file_id
@@ -202,6 +209,7 @@ def html_to_pdf(html_string, file):
 def extractInformation(file, cancel_event=None):
     """Extracts structured information from a raw text file, with optional cancellation."""
     engine = PromptingEngine(API_DICT, "src/prompting/templates.json")
+    sessieID = str(uuid4())
     
     with open(file, 'r') as f:
         verhoor = f.read()
@@ -225,15 +233,43 @@ def extractInformation(file, cancel_event=None):
             print(f"[extractInformation] Cancelled during '{key}' extraction.")
             return None  # or: return information to keep partial results
 
+        start_time = datetime.now()
+
+
         prompt = f"{prompt_text}\n\n\nVerhoor:\n{verhoor}"
-        information[key] = engine.generate_response("verhoor-vragen-gpt-4o", prompt=prompt)
+        res = engine.generate_response("verhoor-vragen-gpt-4o", prompt=prompt)
+
+        end_time = datetime.now()
+        time_to_complete = (end_time - start_time).total_seconds()
+        administrative_log(
+            "GPT-communication",
+            sessieID=sessieID,
+            input=prompt_text,
+            results=res,
+            model="GPT4o",
+            engine=str(engine),
+            time_to_complete=time_to_complete,
+        )
+        information[key] = res
 
     # Final summary generation
     if cancel_event and cancel_event.is_set():
         print("[extractInformation] Cancelled before generating proces-verbaal.")
         return None  # or: return information
 
+    start_time = datetime.now()
     information["proces_verbaal"] = engine.generate_response("verhoor-samenvatting-gpt-4o", prompt=verhoor)
+    end_time = datetime.now()
+    time_to_complete = (end_time - start_time).total_seconds()
+    administrative_log(
+        "GPT-communication",
+        sessieID=sessieID,
+        input=verhoor,
+        results=information["proces_verbaal"],
+        model="GPT4o",
+        engine=str(engine),
+        time_to_complete=time_to_complete,
+    )
 
     return information
 

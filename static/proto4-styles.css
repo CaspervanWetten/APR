@@ -29,7 +29,7 @@ body {
   top: 0;
   height: 100vh;
   width: 250px;
-  background-color: #103355;
+  background-color: #0A603F; /* Dark Green */
   padding: 20px;
   color: white;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -54,11 +54,12 @@ body {
 }
 
 .sidebar .nav-link:hover {
-  background-color: #495057;
+  background-color: #0D8F61; /* Lighter Green for hover */
 }
 
 .sidebar .nav-link.active {
-  background-color: #0d6efd;
+  background-color: #1ED760; /* Active Green */
+  color: white; /* Keep white text */
   font-weight: bold;
 }
 
@@ -89,7 +90,7 @@ body {
 }
 
 .modal-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #3CB371 0%, #2E8B57 100%); /* Green gradient */
   color: white;
   border-bottom: none;
   border-radius: 12px 12px 0 0;
@@ -152,8 +153,8 @@ body {
 }
 
 .proces-verbaal-textarea:focus {
-  border-color: #667eea;
-  box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+  border-color: #1ED760; /* Green focus */
+  box-shadow: 0 0 0 0.25rem rgba(30, 215, 96, 0.25); /* Green shadow */
 }
 
 /* ===============
@@ -166,7 +167,7 @@ body {
 }
 
 .log-row {
-  background: linear-gradient(135deg, #98fb98, #90ee90) !important;
+  background: linear-gradient(135deg, #E6FFE6, #CCFFCC) !important; /* Light Green */
   animation: logRowPulse 2s ease-in-out;
 }
 
@@ -239,7 +240,7 @@ body {
 }
 
 .notification-success {
-  background: linear-gradient(135deg, #28a745, #20c997);
+  background: linear-gradient(135deg, #28a745, #20c997); /* Keep original green for success */
   color: white;
 }
 
@@ -320,7 +321,7 @@ body {
 
 .btn:focus,
 .form-control:focus {
-  outline: 2px solid #007bff;
+  outline: 2px solid #1ED760; /* Green focus */
   outline-offset: 2px;
 }
 

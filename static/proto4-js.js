@@ -195,10 +195,6 @@ function renderTable(data) {
     // Match on status values
     switch (item.status) {
       case "done":
-        // Ensure modal exists
-        ensureModalExists();
-
-        // Create and append the "View" button
         const viewBtn = createViewButton(item);
         const deleteBtn = createDeleteButton(item, tdAction);
 
@@ -240,46 +236,17 @@ function renderTable(data) {
 }
 
 /// =============
-/////// Modal
+/////// Blank Modal (Proto4)
 /// =============
-function ensureModalExists() {
-  if (document.getElementById("textEditorModal")) return;
-
-  const modal = document.createElement("div");
-  modal.id = "textEditorModal";
-  Object.assign(modal.style, {
-    position: "fixed",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "white",
-    padding: "20px",
-    border: "1px solid #ccc",
-    borderRadius: "8px",
-    boxShadow: "0 2px 10px rgba(0,0,0,0.2)",
-    zIndex: "1000",
-    display: "none",
-    width: "90%",
-    maxWidth: "1200px",
-    maxHeight: "90%",
-    overflowY: "auto",
-  });
-
-  const infoContainer = document.createElement("div");
-  infoContainer.id = "modalInfoContainer";
-  infoContainer.style.marginBottom = "15px";
-  modal.appendChild(infoContainer);
-
-  const buttonContainer = document.createElement("div");
-  buttonContainer.id = "modalButtonContainer";
-  Object.assign(buttonContainer.style, {
-    marginTop: "15px",
-    display: "flex",
-    justifyContent: "space-between",
-    flexWrap: "wrap",
-  });
-  modal.appendChild(buttonContainer);
-  document.body.appendChild(modal);
+function showBlankModal(item) {
+    const blankModalEl = document.getElementById('blank-modal');
+    if (!blankModalEl) return;
+    const blankModal = new bootstrap.Modal(blankModalEl);
+    
+    blankModalEl.querySelector('.modal-title').textContent = `Prototype 4 View for: ${item.filename}`;
+    blankModalEl.querySelector('.modal-body').innerHTML = '<p>This is a blank modal for Prototype 4.</p>';
+    
+    blankModal.show();
 }
 
 /// ==============
@@ -290,125 +257,8 @@ function createViewButton(item) {
   btn.type = "button";
   btn.className = "btn btn-primary mb-3";
   btn.textContent = "View";
-  btn.addEventListener("click", () =>
-    showModalWithData(item, [
-      createSaveButton(),
-      createGenerateButton(),
-      createCloseButton(),
-    ])
-  );
+  btn.addEventListener("click", () => showBlankModal(item));
   return btn;
-}
-
-function showModalWithData(item, buttons) {
-  ensureModalExists();
-  const modal = document.getElementById("textEditorModal");
-  const infoContainer = document.getElementById("modalInfoContainer");
-
-  infoContainer.innerHTML = `
-    ${createLabel("ID (filename)", "inputID", item.filename, true)}
-    ${createLabel("Datum", "inputDatum", item.datum)}
-    ${createLabel("Tijd", "inputTijd", item.tijd)}
-    ${createLabel("Verdachte", "inputVerdachte", item.verdachte)}
-    ${createLabel("Geboortedatum", "inputGeboortedag", item.geboortedag)}
-    ${createLabel("Geboortestad", "inputGeboortestad", item.geboortestad)}
-    ${createLabel("Woonadres", "inputWoonadres", item.woonadres)}
-    ${createLabel("Woonstad", "inputWoonstad", item.woonstad)}
-    ${createLabel("Locatie verhoor", "inputLocatie", item.locatie)}
-    ${createLabel("Verbalisanten", "inputVerbalisanten", item.verbalisanten)}
-  `;
-
-  const buttonContainer = document.getElementById("modalButtonContainer");
-
-  const textarea = document.createElement("textarea");
-  textarea.id = "editorTextarea";
-  textarea.style.width = "100%";
-  textarea.style.height = "300px";
-
-  modal.insertBefore(textarea, buttonContainer);
-  document.getElementById("editorTextarea").value =
-    item.proces_verbaal || "Geen proces-verbaal beschikbaar.";
-  modal.style.display = "block";
-
-  buttons.forEach((btn) => buttonContainer.appendChild(btn));
-}
-
-function createLabel(label, id, value, readonly = false) {
-  return `
-    <label><strong>${label}:</strong>
-      <textarea id="${id}" class="form-control mb-2" ${
-    readonly ? "readonly" : ""
-  }>${value || ""}</textarea>
-    </label>
-  `;
-}
-
-function createSaveButton() {
-  const saveBtn = document.createElement("button");
-  saveBtn.textContent = "Save";
-  saveBtn.className = "btn btn-primary mb-2";
-  saveBtn.addEventListener("click", handleSave);
-  return saveBtn;
-}
-
-function handleSave() {
-  const currentData = collectFormData();
-  console.log("Saved data:", currentData);
-  ws.send(JSON.stringify({ action: "update-pv-information", currentData }));
-  showPopup("✔️ Opgeslagen", "#28a745");
-}
-
-function createGenerateButton() {
-  const generateBtn = document.createElement("button");
-  generateBtn.textContent = "Generate Report";
-  generateBtn.className = "btn mb-2";
-  generateBtn.style.backgroundColor = "orange";
-  generateBtn.style.color = "white";
-  generateBtn.addEventListener("click", handleGenerate);
-  return generateBtn;
-}
-
-function handleGenerate() {
-  const currentData = collectFormData();
-
-  const missingFields = Object.entries(currentData)
-    .filter(([_, val]) => val?.trim().toLowerCase() === "niet gevonden")
-    .map(([key]) => key);
-
-  if (missingFields.length > 0) {
-    showPopup(
-      `❌ Geen resultaat gegeven voor: ${missingFields.join(", ")}`,
-      "#dc3545"
-    );
-    return;
-  }
-
-  console.log("Updating data:", currentData);
-  ws.send(JSON.stringify({ action: "update-pv-information", currentData }));
-
-  setTimeout(() => {
-    ws.send(JSON.stringify({ action: "generateReport", ID: currentData.ID }));
-  }, 500);
-
-  showPopup("!Generating!", "#24a745");
-}
-
-function createCloseButton() {
-  ensureModalExists();
-  const closeBtn = document.createElement("button");
-  const modal = document.getElementById("textEditorModal");
-  const buttonContainer = document.getElementById("modalButtonContainer");
-  closeBtn.textContent = "Close";
-  closeBtn.className = "btn btn-secondary mt-2";
-  closeBtn.style.marginLeft = "auto";
-  closeBtn.addEventListener("click", () => {
-    modal.style.display = "none";
-    while (buttonContainer.firstChild) {
-      buttonContainer.removeChild(buttonContainer.firstChild);
-    }
-    modal.removeChild(document.getElementById("editorTextarea"));
-  });
-  return closeBtn;
 }
 
 function createDeleteButton(item, tdAction) {
@@ -515,33 +365,6 @@ function createStatusText(status) {
   return statusText;
 }
 
-function createCancelButton(item, tdAction) {
-  const cancelBtn = document.createElement("button");
-  cancelBtn.type = "button";
-  cancelBtn.className = "btn btn-warning btn-sm ms-3";
-  cancelBtn.textContent = "Cancel";
-  cancelBtn.addEventListener("click", () => handleCancel(item, tdAction));
-  return cancelBtn;
-}
-
-function handleCancel(item, tdAction) {
-  tdAction.innerHTML = `
-    <div class="spinner-border spinner-border-sm" role="status">
-      <span class="visually-hidden">Cancelling...</span>
-    </div>
-    <span class="ms-2">cancelling...</span>
-  `;
-
-  ws.send(
-    JSON.stringify({
-      action: "cancel-task",
-      filename: item.filename,
-    })
-  );
-
-  console.log("Cancel sent for", item.filename);
-}
-
 function createViewTLogsButton(item) {
   const viewTLogs = document.createElement("button");
   viewTLogs.type = "button";
@@ -573,22 +396,6 @@ function createViewALogsButton(item) {
 /// =============
 /// Shared helper functions
 /// ============
-function collectFormData() {
-  return {
-    ID: document.getElementById("inputID").value,
-    datum: document.getElementById("inputDatum").value,
-    tijd: document.getElementById("inputTijd").value,
-    verdachte: document.getElementById("inputVerdachte").value,
-    geboortedag: document.getElementById("inputGeboortedag").value,
-    geboortestad: document.getElementById("inputGeboortestad").value,
-    woonadres: document.getElementById("inputWoonadres").value,
-    woonstad: document.getElementById("inputWoonstad").value,
-    locatie: document.getElementById("inputLocatie").value,
-    verbalisanten: document.getElementById("inputVerbalisanten").value,
-    proces_verbaal: document.getElementById("editorTextarea").value,
-  };
-}
-
 function showPopup(message, bgColor = "#28a745") {
   const popup = document.createElement("div");
   popup.textContent = message;
@@ -703,7 +510,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // If no exact match, try to find a base match (e.g. for /)
   if (!activeSet && currentPath === '/') {
-      const dashboardLink = document.querySelector('.sidebar .nav-link[href="/apr"]');
+      const dashboardLink = document.querySelector('.sidebar .nav-link[href="/APR"]');
       if (dashboardLink) {
           dashboardLink.classList.add("active");
       }

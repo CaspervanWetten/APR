@@ -54,6 +54,18 @@ async def APR(request: Request):
         html_conent = await file.read()
     return html(html_conent)
 
+@epts.route('/APR/proto3', methods=["POST", "GET"])
+async def APRproto3(request: Request):
+    async with async_open("templates/proto3.html", mode="r") as file:
+        html_conent = await file.read()
+    return html(html_conent)
+
+@epts.route('/APR/proto4', methods=["POST", "GET"])
+async def APRproto4(request: Request):
+    async with async_open("templates/proto4.html", mode="r") as file:
+        html_conent = await file.read()
+    return html(html_conent)
+
 # handle missing pages
 @epts.exception(NotFound)
 async def handle_404(request, exception):

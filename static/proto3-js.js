@@ -195,10 +195,6 @@ function renderTable(data) {
     // Match on status values
     switch (item.status) {
       case "done":
-        // Ensure modal exists
-        ensureModalExists();
-
-        // Create and append the "View" button
         const viewBtn = createViewButton(item);
         const deleteBtn = createDeleteButton(item, tdAction);
 
@@ -240,46 +236,236 @@ function renderTable(data) {
 }
 
 /// =============
-/////// Modal
+/////// Word Interface Modal
 /// =============
-function ensureModalExists() {
-  if (document.getElementById("textEditorModal")) return;
 
-  const modal = document.createElement("div");
-  modal.id = "textEditorModal";
-  Object.assign(modal.style, {
-    position: "fixed",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    backgroundColor: "white",
-    padding: "20px",
-    border: "1px solid #ccc",
-    borderRadius: "8px",
-    boxShadow: "0 2px 10px rgba(0,0,0,0.2)",
-    zIndex: "1000",
-    display: "none",
-    width: "90%",
-    maxWidth: "1200px",
-    maxHeight: "90%",
-    overflowY: "auto",
-  });
+function debounce(func, delay) {
+    let timeout;
+    return function(...args) {
+        const context = this;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(context, args), delay);
+    };
+}
 
-  const infoContainer = document.createElement("div");
-  infoContainer.id = "modalInfoContainer";
-  infoContainer.style.marginBottom = "15px";
-  modal.appendChild(infoContainer);
+const debouncedUpdate = debounce(sendMetadataUpdate, 500);
 
-  const buttonContainer = document.createElement("div");
-  buttonContainer.id = "modalButtonContainer";
-  Object.assign(buttonContainer.style, {
-    marginTop: "15px",
-    display: "flex",
-    justifyContent: "space-between",
-    flexWrap: "wrap",
-  });
-  modal.appendChild(buttonContainer);
-  document.body.appendChild(modal);
+function attachUpdateListeners(container) {
+    const textareas = container.querySelectorAll('textarea:not([data-listener-attached])');
+    textareas.forEach(textarea => {
+        textarea.addEventListener('input', debouncedUpdate);
+        textarea.addEventListener('blur', sendMetadataUpdate);
+        textarea.dataset.listenerAttached = 'true';
+    });
+}
+
+function sendMetadataUpdate() {
+    const modal = document.getElementById('word-interface-modal');
+    if (!modal.dataset.filename) return;
+
+    const filename = modal.dataset.filename;
+    let procesVerbaal = "";
+
+    modal.querySelectorAll('.q-a-pair').forEach(pair => {
+        const question = pair.querySelector('.question-input').value.trim();
+        const answer = pair.querySelector('.answer-area').value.trim();
+        if (question || answer) { // Send even if one is empty, to save progress
+            procesVerbaal += `Vraag: ${question}\nAntwoord: ${answer}\n\n`;
+        }
+    });
+
+    const updateData = {
+        ID: filename,
+        proces_verbaal: procesVerbaal.trim()
+    };
+
+    ws.send(JSON.stringify({
+        action: 'update-pv-information',
+        currentData: updateData
+    }));
+}
+
+function createQaPairElement(question = '', answer = '') {
+    const newPair = document.createElement('div');
+    newPair.className = 'q-a-pair';
+    newPair.innerHTML = `
+        <textarea class="question-input form-control mb-2" placeholder="Type your question here...">${question}</textarea>
+        <textarea class="answer-area form-control p-2" ondragover="allowDrop(event)" ondrop="drop(event, this)" placeholder="Drop text here or type...">${answer}</textarea>
+    `;
+    return newPair;
+}
+
+function showWordInterface(item) {
+    const wordModalEl = document.getElementById('word-interface-modal');
+    if (!wordModalEl) return;
+    const wordModal = new bootstrap.Modal(wordModalEl);
+    
+    wordModalEl.dataset.filename = item.filename;
+    wordModal.show();
+
+    const reportColumn = document.getElementById('report-column');
+
+    const existingPreamble = reportColumn.querySelector('.report-preamble');
+    if (existingPreamble) {
+        existingPreamble.remove();
+    }
+
+    const preAmble = document.createElement('div');
+    preAmble.className = 'report-preamble';
+    preAmble.innerHTML = `
+        <h5>Report for: ${item.original_filename || item.filename}</h5>
+        <p class="text-muted">Created on: ${new Date(item.created_at).toLocaleString()}</p>
+        <hr>
+        <h6>Details</h6>
+        <ul>
+            <li><strong>Datum:</strong> ${item.datum || 'N/A'}</li>
+            <li><strong>Tijd:</strong> ${item.tijd || 'N/A'}</li>
+            <li><strong>Locatie:</strong> ${item.locatie || 'N/A'}</li>
+            <li><strong>Verdachte:</strong> ${item.verdachte || 'N/A'}</li>
+        </ul>
+        <hr>
+    `;
+
+    const reportEditor = document.getElementById('report-editor');
+    reportColumn.insertBefore(preAmble, reportEditor);
+
+    const sourceColumn = document.getElementById('source-column');
+    sourceColumn.innerHTML = '<h6>Extracted Information</h6><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>';
+    
+    reportEditor.innerHTML = ''; // Clear it out first
+
+    if (item.proces_verbaal && item.proces_verbaal.trim()) {
+        const pairs = item.proces_verbaal.trim().split('Vraag: '); // Split by "Vraag: "
+        pairs.forEach(pairStr => {
+            if (pairStr.trim()) {
+                const parts = pairStr.split('\nAntwoord: ');
+                const question = parts[0].trim();
+                const answer = parts.slice(1).join('\nAntwoord: ').trim(); // Rejoin if "Antwoord: " appeared in answer
+                
+                const newPair = createQaPairElement(question, answer);
+                reportEditor.appendChild(newPair);
+                attachUpdateListeners(newPair);
+            }
+        });
+    } else {
+        const newPair = createQaPairElement();
+        reportEditor.appendChild(newPair);
+        attachUpdateListeners(newPair);
+    }
+    
+    const addBtn = document.createElement('button');
+    addBtn.id = 'add-q-a-pair';
+    addBtn.className = 'btn btn-secondary mt-2';
+    addBtn.textContent = 'Add Question';
+    addBtn.addEventListener('click', addQaPair);
+    reportEditor.appendChild(addBtn);
+
+    ws.send(JSON.stringify({
+        action: "Blocks",
+        filename: item.filename
+    }));
+}
+
+function populateWordInterface(data) {
+    const sourceColumn = document.getElementById('source-column');
+    sourceColumn.innerHTML = '<h6>Extracted Information</h6>'; 
+
+    if (Object.keys(data).length === 0) {
+        sourceColumn.innerHTML += '<p>No information extracted.</p>';
+        return;
+    }
+
+    for (const blockName in data) {
+        const sourceBlock = document.createElement('div');
+        sourceBlock.className = 'source-block';
+
+        const title = document.createElement('div');
+        title.className = 'source-block-title';
+        title.textContent = blockName;
+        sourceBlock.appendChild(title);
+
+        data[blockName].forEach(text => {
+        const draggable = document.createElement('div');
+        draggable.className = 'draggable-text';
+        draggable.textContent = text;
+        draggable.draggable = true;
+        draggable.addEventListener('dragstart', dragStart);
+        sourceBlock.appendChild(draggable);
+        });
+
+        sourceColumn.appendChild(sourceBlock);
+    }
+}
+
+function dragStart(event) {
+    event.dataTransfer.setData("text/plain", event.target.textContent);
+    event.target.classList.add('dragging');
+    event.target.addEventListener('dragend', () => {
+        event.target.classList.remove('dragging');
+    }, { once: true });
+}
+
+function allowDrop(event) {
+    event.preventDefault();
+}
+
+function drop(event, element) {
+    event.preventDefault();
+    const data = event.dataTransfer.getData("text/plain");
+
+    if (element.tagName === 'TEXTAREA') {
+        const startPos = element.selectionStart;
+        const endPos = element.selectionEnd;
+        const currentText = element.value;
+
+        element.value = currentText.substring(0, startPos) + data + currentText.substring(endPos, currentText.length);
+
+        element.selectionStart = startPos + data.length;
+        element.selectionEnd = startPos + data.length;
+
+        element.focus();
+    } else {
+        console.error("Drop target is not a textarea.");
+    }
+}
+
+function addQaPair() {
+    const reportEditor = document.getElementById('report-editor');
+    const addBtn = document.getElementById('add-q-a-pair');
+    
+    const newPair = createQaPairElement();
+    reportEditor.insertBefore(newPair, addBtn);
+    attachUpdateListeners(newPair);
+}
+
+function generateAndDownloadPdf() {
+    const modal = document.getElementById('word-interface-modal');
+    const filename = modal.dataset.filename;
+    let procesVerbaal = "";
+
+    modal.querySelectorAll('.q-a-pair').forEach(pair => {
+        const question = pair.querySelector('.question-input').value.trim();
+        const answer = pair.querySelector('.answer-area').value.trim();
+        if (question && answer) {
+            procesVerbaal += `Vraag: ${question}\nAntwoord: ${answer}\n\n`;
+        }
+    });
+
+    if (procesVerbaal.trim()) {
+        const updateData = {
+            ID: filename,
+            proces_verbaal: procesVerbaal.trim()
+        };
+
+        ws.send(JSON.stringify({
+            action: 'update-and-generate-pdf',
+            data: updateData
+        }));
+
+        showPopup("📄 Generating PDF...", "#0dcaf0");
+    } else {
+        showPopup("❌ Report is empty", "#dc3545");
+    }
 }
 
 /// ==============
@@ -290,125 +476,8 @@ function createViewButton(item) {
   btn.type = "button";
   btn.className = "btn btn-primary mb-3";
   btn.textContent = "View";
-  btn.addEventListener("click", () =>
-    showModalWithData(item, [
-      createSaveButton(),
-      createGenerateButton(),
-      createCloseButton(),
-    ])
-  );
+  btn.addEventListener("click", () => showWordInterface(item));
   return btn;
-}
-
-function showModalWithData(item, buttons) {
-  ensureModalExists();
-  const modal = document.getElementById("textEditorModal");
-  const infoContainer = document.getElementById("modalInfoContainer");
-
-  infoContainer.innerHTML = `
-    ${createLabel("ID (filename)", "inputID", item.filename, true)}
-    ${createLabel("Datum", "inputDatum", item.datum)}
-    ${createLabel("Tijd", "inputTijd", item.tijd)}
-    ${createLabel("Verdachte", "inputVerdachte", item.verdachte)}
-    ${createLabel("Geboortedatum", "inputGeboortedag", item.geboortedag)}
-    ${createLabel("Geboortestad", "inputGeboortestad", item.geboortestad)}
-    ${createLabel("Woonadres", "inputWoonadres", item.woonadres)}
-    ${createLabel("Woonstad", "inputWoonstad", item.woonstad)}
-    ${createLabel("Locatie verhoor", "inputLocatie", item.locatie)}
-    ${createLabel("Verbalisanten", "inputVerbalisanten", item.verbalisanten)}
-  `;
-
-  const buttonContainer = document.getElementById("modalButtonContainer");
-
-  const textarea = document.createElement("textarea");
-  textarea.id = "editorTextarea";
-  textarea.style.width = "100%";
-  textarea.style.height = "300px";
-
-  modal.insertBefore(textarea, buttonContainer);
-  document.getElementById("editorTextarea").value =
-    item.proces_verbaal || "Geen proces-verbaal beschikbaar.";
-  modal.style.display = "block";
-
-  buttons.forEach((btn) => buttonContainer.appendChild(btn));
-}
-
-function createLabel(label, id, value, readonly = false) {
-  return `
-    <label><strong>${label}:</strong>
-      <textarea id="${id}" class="form-control mb-2" ${
-    readonly ? "readonly" : ""
-  }>${value || ""}</textarea>
-    </label>
-  `;
-}
-
-function createSaveButton() {
-  const saveBtn = document.createElement("button");
-  saveBtn.textContent = "Save";
-  saveBtn.className = "btn btn-primary mb-2";
-  saveBtn.addEventListener("click", handleSave);
-  return saveBtn;
-}
-
-function handleSave() {
-  const currentData = collectFormData();
-  console.log("Saved data:", currentData);
-  ws.send(JSON.stringify({ action: "update-pv-information", currentData }));
-  showPopup("✔️ Opgeslagen", "#28a745");
-}
-
-function createGenerateButton() {
-  const generateBtn = document.createElement("button");
-  generateBtn.textContent = "Generate Report";
-  generateBtn.className = "btn mb-2";
-  generateBtn.style.backgroundColor = "orange";
-  generateBtn.style.color = "white";
-  generateBtn.addEventListener("click", handleGenerate);
-  return generateBtn;
-}
-
-function handleGenerate() {
-  const currentData = collectFormData();
-
-  const missingFields = Object.entries(currentData)
-    .filter(([_, val]) => val?.trim().toLowerCase() === "niet gevonden")
-    .map(([key]) => key);
-
-  if (missingFields.length > 0) {
-    showPopup(
-      `❌ Geen resultaat gegeven voor: ${missingFields.join(", ")}`,
-      "#dc3545"
-    );
-    return;
-  }
-
-  console.log("Updating data:", currentData);
-  ws.send(JSON.stringify({ action: "update-pv-information", currentData }));
-
-  setTimeout(() => {
-    ws.send(JSON.stringify({ action: "generateReport", ID: currentData.ID }));
-  }, 500);
-
-  showPopup("!Generating!", "#24a745");
-}
-
-function createCloseButton() {
-  ensureModalExists();
-  const closeBtn = document.createElement("button");
-  const modal = document.getElementById("textEditorModal");
-  const buttonContainer = document.getElementById("modalButtonContainer");
-  closeBtn.textContent = "Close";
-  closeBtn.className = "btn btn-secondary mt-2";
-  closeBtn.style.marginLeft = "auto";
-  closeBtn.addEventListener("click", () => {
-    modal.style.display = "none";
-    while (buttonContainer.firstChild) {
-      buttonContainer.removeChild(buttonContainer.firstChild);
-    }
-    modal.removeChild(document.getElementById("editorTextarea"));
-  });
-  return closeBtn;
 }
 
 function createDeleteButton(item, tdAction) {
@@ -515,33 +584,6 @@ function createStatusText(status) {
   return statusText;
 }
 
-function createCancelButton(item, tdAction) {
-  const cancelBtn = document.createElement("button");
-  cancelBtn.type = "button";
-  cancelBtn.className = "btn btn-warning btn-sm ms-3";
-  cancelBtn.textContent = "Cancel";
-  cancelBtn.addEventListener("click", () => handleCancel(item, tdAction));
-  return cancelBtn;
-}
-
-function handleCancel(item, tdAction) {
-  tdAction.innerHTML = `
-    <div class="spinner-border spinner-border-sm" role="status">
-      <span class="visually-hidden">Cancelling...</span>
-    </div>
-    <span class="ms-2">cancelling...</span>
-  `;
-
-  ws.send(
-    JSON.stringify({
-      action: "cancel-task",
-      filename: item.filename,
-    })
-  );
-
-  console.log("Cancel sent for", item.filename);
-}
-
 function createViewTLogsButton(item) {
   const viewTLogs = document.createElement("button");
   viewTLogs.type = "button";
@@ -572,23 +614,7 @@ function createViewALogsButton(item) {
 
 /// =============
 /// Shared helper functions
-/// ============
-function collectFormData() {
-  return {
-    ID: document.getElementById("inputID").value,
-    datum: document.getElementById("inputDatum").value,
-    tijd: document.getElementById("inputTijd").value,
-    verdachte: document.getElementById("inputVerdachte").value,
-    geboortedag: document.getElementById("inputGeboortedag").value,
-    geboortestad: document.getElementById("inputGeboortestad").value,
-    woonadres: document.getElementById("inputWoonadres").value,
-    woonstad: document.getElementById("inputWoonstad").value,
-    locatie: document.getElementById("inputLocatie").value,
-    verbalisanten: document.getElementById("inputVerbalisanten").value,
-    proces_verbaal: document.getElementById("editorTextarea").value,
-  };
-}
-
+/// ============ 
 function showPopup(message, bgColor = "#28a745") {
   const popup = document.createElement("div");
   popup.textContent = message;
@@ -658,6 +684,10 @@ ws.addEventListener("message", ({ data: raw }) => {
       renderTable(data.data);
       break;
 
+    case "word-interface-data":
+      populateWordInterface(data.data);
+      break;
+
     case "logs-update":
       // renderTable handles both “none” and actual arrays
       console.log(data.data);
@@ -703,10 +733,16 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // If no exact match, try to find a base match (e.g. for /)
   if (!activeSet && currentPath === '/') {
-      const dashboardLink = document.querySelector('.sidebar .nav-link[href="/apr"]');
+      const dashboardLink = document.querySelector('.sidebar .nav-link[href="/APR"]');
       if (dashboardLink) {
           dashboardLink.classList.add("active");
       }
+  }
+
+  // Attach generate PDF handler
+  const generateBtn = document.getElementById('generate-pdf-btn');
+  if (generateBtn) {
+      generateBtn.addEventListener('click', generateAndDownloadPdf);
   }
 });
 

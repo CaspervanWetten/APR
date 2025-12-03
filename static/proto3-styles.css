@@ -29,7 +29,7 @@ body {
   top: 0;
   height: 100vh;
   width: 250px;
-  background-color: #103355;
+  background-color: #E6B800;
   padding: 20px;
   color: white;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -54,11 +54,12 @@ body {
 }
 
 .sidebar .nav-link:hover {
-  background-color: #495057;
+  background-color: #FFD700;
 }
 
 .sidebar .nav-link.active {
-  background-color: #0d6efd;
+  background-color: #ffc107;
+  color: black;
   font-weight: bold;
 }
 
@@ -89,7 +90,7 @@ body {
 }
 
 .modal-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #FFD54F 0%, #FFC107 100%);
   color: white;
   border-bottom: none;
   border-radius: 12px 12px 0 0;
@@ -152,8 +153,8 @@ body {
 }
 
 .proces-verbaal-textarea:focus {
-  border-color: #667eea;
-  box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+  border-color: #FFC107;
+  box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
 }
 
 /* ===============
@@ -166,7 +167,7 @@ body {
 }
 
 .log-row {
-  background: linear-gradient(135deg, #98fb98, #90ee90) !important;
+  background: linear-gradient(135deg, #fffbe0, #fff2b2) !important;
   animation: logRowPulse 2s ease-in-out;
 }
 
@@ -239,7 +240,7 @@ body {
 }
 
 .notification-success {
-  background: linear-gradient(135deg, #28a745, #20c997);
+  background: linear-gradient(135deg, #FFC107, #FFB300);
   color: white;
 }
 
@@ -320,7 +321,7 @@ body {
 
 .btn:focus,
 .form-control:focus {
-  outline: 2px solid #007bff;
+  outline: 2px solid #FFC107;
   outline-offset: 2px;
 }
 
@@ -341,4 +342,52 @@ body {
   text-overflow: ellipsis;
   max-width: 5rem;
   white-space: nowrap;
+}/* Word-like Interface Styles */
+#source-column {
+  background-color: #f1f3f5;
+  padding: 15px;
+  border-right: 1px solid #dee2e6;
+  height: calc(100vh - 170px); /* Adjust based on header/footer height */
+  overflow-y: auto;
+}
+
+.source-block {
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.source-block-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #343a40;
+}
+
+.draggable-text {
+  background-color: #e9ecef;
+  border-radius: 4px;
+  padding: 8px;
+  margin-bottom: 8px;
+  cursor: grab;
+  border: 1px solid #ced4da;
+}
+
+#report-column {
+    height: calc(100vh - 170px);
+    overflow-y: auto;
+    padding-top: 15px;
+}
+
+#report-editor .answer-area {
+    min-height: 100px;
+    background-color: #ffffff;
+    /* form-control will handle border/padding/resize, but I will override */
+    border: 1px dashed #ced4da; /* keep dashed border */
+    resize: vertical; /* allow vertical resize */
+}
+
+.dragging {
+  opacity: 0.5;
 }

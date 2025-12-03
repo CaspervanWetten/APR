@@ -12,7 +12,7 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- custom CSS -->
-    <link href="/static/apr-styles.css" rel="stylesheet" />
+    <link href="/static/proto3-styles.css" rel="stylesheet" />
   </head>
   <body>
     <div class="d-flex">
@@ -88,7 +88,40 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-    <script src="/static/apr-js.js"></script>
+    <script src="/static/proto3-js.js"></script>
     <script src="/static/logging-display.js"></script>
+
+    <!-- Proto 3 Word-like Interface Modal -->
+    <div id="word-interface-modal" class="modal fade" tabindex="-1">
+      <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Report Editor</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+              <div class="row">
+                <!-- Left Column: Source Blocks -->
+                <div id="source-column" class="col-md-4">
+                  <!-- Source blocks will be dynamically added here -->
+                </div>
+                <!-- Right Column: Report Editor -->
+                <div id="report-column" class="col-md-8">
+                  <h6>Report</h6>
+                  <div id="report-editor" class="h-100 p-3 border rounded">
+                    <!-- Q&A pairs will be added here -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button id="generate-pdf-btn" type="button" class="btn btn-primary">Generate PDF</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
