@@ -67,7 +67,7 @@ def get_static_function(value: typing.Any) -> typing.Callable[..., typing.Any]:
     return lambda *_, **__: value
 
 REDIRECTS = {
-    '/': '/APR'
+    '/': '/authorize'
 }
 
 for src, dst in REDIRECTS.items():

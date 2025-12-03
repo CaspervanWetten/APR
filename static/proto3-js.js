@@ -1,4 +1,11 @@
-const ws = new WebSocket("ws://localhost:8080/ws/" + crypto.randomUUID());
+function generateUUIDFallback() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+const ws = new WebSocket("ws://localhost:8080/ws/" + (crypto.randomUUID ? crypto.randomUUID() : generateUUIDFallback()));
 const tbody = document.getElementById("pv-table-body");
 const retryInFlight = new Set();
 let noneSeen = false;
@@ -111,7 +118,7 @@ function showUploadForm(filenameToRetry = null) {
         return;
       }
 
-      const UUID = crypto.randomUUID();
+      const UUID = crypto.randomUUID ? crypto.randomUUID() : generateUUIDFallback();
       config.UUID = UUID;
 
       const formData = new FormData();
