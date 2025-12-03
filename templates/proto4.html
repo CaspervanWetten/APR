@@ -91,20 +91,33 @@
     <script src="/static/proto4-js.js"></script>
     <script src="/static/logging-display.js"></script>
 
-    <!-- Blank Modal for Prototype 4 -->
-    <div id="blank-modal" class="modal fade" tabindex="-1">
-      <div class="modal-dialog modal-lg">
+    <!-- Proto 4 Word-like Interface Modal -->
+    <div id="word-interface-modal" class="modal fade" tabindex="-1">
+      <div class="modal-dialog modal-fullscreen">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Prototype 4 Blank Modal</h5>
+            <h5 class="modal-title">Report Editor - Prototype 4</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <!-- Content will be dynamically inserted here -->
-            <p>This is a blank modal for Prototype 4 functionality.</p>
+            <div class="container-fluid">
+              <div class="row">
+                <!-- Single Column: Report Editor -->
+                <div id="report-column" class="col-md-12">
+                  <h6>Report</h6>
+                  <div id="report-editor" class="h-100 p-3 border rounded position-relative">
+                    <!-- Preamble and main report area will be added here by JS -->
+                    <div id="thought-bubbles-container">
+                      <!-- Thought bubbles will be dynamically added here -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button id="generate-pdf-btn" type="button" class="btn btn-primary">Generate PDF</button>
           </div>
         </div>
       </div>

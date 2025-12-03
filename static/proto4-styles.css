@@ -142,16 +142,6 @@ body {
   border: 1px solid #e9ecef;
 }
 
-.proces-verbaal-textarea {
-  min-height: 300px;
-  font-family: "Courier New", Courier, monospace;
-  font-size: 0.9rem;
-  line-height: 1.4;
-  resize: vertical;
-  border: 2px solid #dee2e6;
-  border-radius: 6px;
-}
-
 .proces-verbaal-textarea:focus {
   border-color: #1ED760; /* Green focus */
   box-shadow: 0 0 0 0.25rem rgba(30, 215, 96, 0.25); /* Green shadow */
@@ -342,4 +332,130 @@ body {
   text-overflow: ellipsis;
   max-width: 5rem;
   white-space: nowrap;
+}
+
+/* Word-like Interface Styles for Proto4 */
+#report-column {
+    height: calc(100vh - 170px); /* Full height of the modal body minus header/footer */
+    overflow-y: auto;
+    padding-top: 15px;
+    position: relative; /* For absolute positioning of thought bubbles */
+}
+
+#report-editor {
+    position: relative; /* For absolute positioning of thought bubbles */
+    min-height: 300px; /* Ensure a decent starting height for the editor */
+}
+
+#thought-bubbles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Allows interaction with elements beneath it */
+    z-index: 10; /* Above the textarea, below any overlays */
+    overflow: hidden; /* Keep bubbles within the editor bounds */
+}
+
+.thought-bubble {
+    background-color: #d4edda; /* Lighter green */
+    color: #155724; /* Dark green text */
+    border: 1px solid #c3e6cb;
+    border-radius: 20px;
+    padding: 10px 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    position: absolute;
+    animation: float 5s ease-in-out infinite; /* Keep floating animation */
+    max-width: 250px; /* Limit thought bubble width */
+    word-wrap: break-word;
+    opacity: 0.9;
+    pointer-events: all; /* Re-enable pointer events for interaction */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.9rem;
+    line-height: 1.3;
+}
+
+.thought-bubble:hover {
+    transform: translateY(-3px) scale(1.02);
+    background-color: #c3e6cb;
+}
+
+.thought-bubble.active-thought {
+    border: 2px solid #0A603F; /* Dark green border for active thought */
+    box-shadow: 0 0 10px rgba(10, 96, 63, 0.5);
+    transform: scale(1.05);
+}
+
+/* Speech bubble tail */
+.thought-bubble::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #d4edda; /* Matches bubble background */
+    position: absolute;
+    left: -8px; /* Position to the left of the bubble */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@keyframes float {
+    0% { transform: translateY(0px) translateX(0px); }
+    25% { transform: translateY(-5px) translateX(5px); }
+    50% { transform: translateY(0px) translateX(0px); }
+    75% { transform: translateY(5px) translateX(-5px); }
+    100% { transform: translateY(0px) translateX(0px); }
+}
+
+#report-editor .report-area {
+    min-height: 480px;
+    height: auto; /* Allow textarea to expand */
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px dashed #b2dfdb; /* Greenish dashed border */
+    resize: vertical; 
+    padding: 10px; /* Add some padding to avoid text touching edges */
+    font-size: 1rem;
+    line-height: 1.5;
+    z-index: 1; /* Ensure text is below thought bubbles */
+    position: relative; /* Important for z-index to work */
+}
+
+/* Preamble editable fields */
+.preamble-fields {
+    margin-bottom: 15px;
+}
+
+.preamble-fields label {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 0.9rem;
+    color: #495057;
+}
+
+.preamble-fields textarea.preamble-input {
+    min-height: 40px;
+    max-height: 100px; /* Limit max height for preamble inputs */
+    resize: vertical;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 8px;
+    border: 1px solid #b2dfdb;
+    border-radius: 0.25rem;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.9rem;
+    line-height: 1.3;
+}
+
+.preamble-fields textarea.preamble-input:focus {
+    border-color: #1ED760;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(30, 215, 96, 0.25);
 }

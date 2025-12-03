@@ -1,0 +1,491 @@
+MG: In dat verband ben ik vooral bezig met wetgeving. Waar hebben we nieuwe wetgeving nodig als politie om ons werk goed te kunnen doen? Of waar knelt bestaande wetgeving in de uitvoering van ons werk? En ik doe dat eigenlijk vooral op het gebied van strafvordering. Dus ja, eigenlijk het hele wettelijke kader voor de opsporing. En daarbinnen valt dan Er vallen duizend dingen binnen, maar een van die dingen is dus het maken van een procesverbaal, de status van een procesverbaal, de kwaliteit en alle wettelijke eisen die daaromheen bestaan of zouden moeten bestaan of niet zouden moeten bestaan. Ja, dat is wat ik doe.
+
+
+
+MV: Hoe lang doe je deze werkzaamheid al?
+
+
+
+MG: Sinds de start van de Nationale Politie eigenlijk. Dus dat is nu elf jaar, twaalf jaar geleden. En die eerste periode was vooral gericht op het, waren we meer intern gericht als team. Om te zorgen dat de Nationale Politie ook echt als één organisatie kon werken. Dus dan zat het meer op bedrijfsvoering, interne mandatering. Aantekeningen, registers en dat soort geneuzel. Maar toen dat eenmaal al draaide, is mijn blik zich echt gaan richten op wat ik net beschrijf. Dus ja, ik doe dit al een jaar of tien. Nou, ik heb veel contact met, even om heel kort mijn netwerk te schetsen in de organisatie, op dit moment vooral met digitale opsporing, LANDEC. Digitaal datagedreven werk, dat programma. Maar ik heb ook heel veel contact met Kelly Vink, bijvoorbeeld vanuit de AI-hoek, gegevensautoriteit, invoering van het nieuwe wetboek van strafvordering, daar zit ik allemaal meer of mindere mate in. Dus ik denk wel, ik krijg welregelmatig vragen.
+
+
+
+MV: Er is een hoop bewegende onderdelen hoor ik inderdaad
+
+
+
+MG: Ja, want jullie weten ook dat Harry Bartsch bezig is met een opdracht.
+
+
+
+MV: We hebben die naam één keer eerder gehoord.
+
+
+
+C: Harry Bartsch, dat doet voor mij geen belletje ringen.
+
+
+
+MG: Ja, Bartsch. B-A-R-T-S-C-H. Henry. Sorry, is niet Harry, het maar Henry. Henry is voor mij projectleider van het PPI management pool. Dienst IV van PDC, die heeft van programmadirecteur invoering Nieuw Wethoek van Strafvording de opdracht gekregen om te gaan kijken of er een soort proof of concept gedaan kan worden om inderdaad zo'n speech to text gegenereerd transcript om te zetten naar een vorm die voor de rest van de strafrechtketens, de officier van justitie en de rechtelijke macht en de advocatuur aanvaardbaar is als alternatief voor het klassieke procesverbaal van verhoor.
+
+
+
+MV: Dat is een mooie link, daar moeten we denk ik zeker even mee gaan spreken. Het is voor mij, ik kom voornamelijk ook uit de van de hoek AI-organisatie en het is soms lastig om te merken dat de link tussen de innovatieve teams en wat er daadwerkelijk gerealiseerd wordt, aan de andere kant, er niet altijd is, terwijl er best wel veel kennis beschikbaar is.
+
+
+
+MG: Ja, het klinkt nu ook als ik jou hoor zeggen dat er al een technisch prototype is. Ik denk he, wacht even, volgens mij zit hier een dubbeling. Wat mij ook wel enigszins verbaast, want ik weet dat Harry ook in het MTAI is geweest. Met dit verhaal, dat heeft dan kennelijk jou nog niet bereikt Martijn.
+
+
+
+MV: Bijzonder inderdaad, maar niet de eerste keer dat ik zoiets merk, laat ik het zo zeggen.
+
+
+
+MG: Ja, je zou me een groot plezier doen als je even met Henry Bartsch even een shout-out doet. Even kijken of dat nou inderdaad hetzelfde is, een dubbel werk dreigt of dat het toch over iets anders gaat. Even die....
+
+
+
+MV: Heel goed om dat af te stemmen inderdaad. En ik denk dat er überhaupt dusdanig veel vragen op dit vlak nog zitten. Dat je hier heel makkelijk elkaar goed aan kan vullen. Als je het maar een beetje goed coördineert. Ja. Dank je wel daarvoor. Dat is een mooie link. Oké. Dan even terug. Want we proberen specifiek voor procesverbalen, voor verhoor, daarop te richten. Zou je misschien je link of je ervaringen met dat stukje uit kunnen leggen?
+
+
+
+MG: Ja, even denken. Kijk, wat een procesverbaal is en aan welke eisen dat moet voldoen, staat gewoon in de wet. Dus dat word ik geacht als jurist te snappen, te kennen. We hebben een ontwikkeling natuurlijk nu dat we van een bestaand wetboek van strafvordering, want daar staat het in, overgaan naar een nieuw wetboek van strafvordering. Datum daarvoor is 2029. En ik ben ook al heel lang betrokken bij wat moet er in dat nieuwe wetboek van strafvoordering dan komen te staan, wat de politie betreft. En daar staat eigenlijk niet veel anders in, in het nieuwe wetboek dan in het huidige wetboek, als het gaat om het procesverbaal.
+
+Er wordt al een klein beetje aan gesleuteld, maar in essentie blijft een procesverbaal gewoon wat het nu is, juridisch. Namelijk een verslag van een opsporingsambtenaar over wat hij heeft gedaan of wat hij heeft gezien, gehoord, geroken, gevoeld enzovoort. En dat moet aan een aantal eisen voldoen. Die zijn niet heel spannend in het wetboek, ook niet in het nieuwe wetboek. En het spannendste eraan is eigenlijk dat dat als het voldoet aan die voorwaarden, zo'n document, dat het bijzondere bewijswaarde heeft voor de rechter. Als een burger exact hetzelfde document zou maken, zou het gewoon iets zijn waar de rechter rekening mee kan houden, maar dan moet er nog aanvullend bewijs zijn om een verdachte op te kunnen veroordelen. En als het document door een opsporingsambtenaar is gemaakt, dan is dat het document voldoende voor de rechter, om een veroordeling op te baseren. Dus dat is wel een wezenlijk verschil. Ik zeg het altijd zo, iedereen weet dat de politie het geweldsmonopolie heeft. Wij zijn de enigen die in het civiele domein, dus niet in het militaire domein maar in het civiele domein met een vuurwapen mogen rondlopen en dat ook af en toe mogen gebruiken. Dat is het geweldsmonopolie. We mogen waterwerpers op menigtes loslaten enzovoorts. Maar dit is eigenlijk ook een soort monopolie, maar dan eigenlijk een monopolie op de waarheid. Dus ik noem dat ook vaak het waarheidsmonopolie. En dat heeft dus te maken met die bijzondere bewijskracht van het proces verbaal. En ook dat blijft gewoon, dat is nu al zo, dat is al 100 jaar zo in Nederland. En dat zal ook in het nieuwe wetboek van strafvordering, gewoon zo blijven. Dus in die zin verandert er helemaal niks. Dus ook het hele idee dat je misschien met AI of andere technische hulpmiddelen zo'n soort document kunt maken uit bronmateriaal. Dat hele idee is eigenlijk niet besproken of verwerkt in het nieuwe wetboek van strafvordering. Het wetboek, gaat er gewoon nog vanuit dat een procesverbaal iets is wat door een mens gemaakt wordt. Nog een gekwalificeerd mens ook. Je moet opslooringsambtenaar zijn, dat ben je ook niet zomaar. Daar moet je een opleiding voor hebben gedaan en gekwalificeerd en aangewezen enzovoorts. Dus dat is nog steeds gewoon waar het wetboek van uitgaat.
+
+
+
+MV: Maar er staat ook niet per se specifiek beschreven hoe dat procesverbaal tot stand gekomen. Alleen dat het geaccordeerd moet zijn door iemand onder de ambtseed, zeg maar.
+
+
+
+MG: Ja.
+
+
+
+MV: Oké, dat geeft wel ruimte.
+
+
+
+MG: Nee, er staat niet heel gedetailleerd hoe zo'n ding tot stand moet komen. Nee. Gelukkig niet.
+
+
+
+MV: Ja, dat scheelt. Er zijn wel eerder specifieke kwaliteitseisen die erbij horen, dan horen die wel daarbij?
+
+
+
+MG: Er zijn dus op twee niveaus kwaliteitseisen. Eén kwaliteitseisen aan degene die het maakt, de opsporingsambtenaar. En dat gaat eigenlijk niet veel verder dan je moet opsporingsambtenaar zijn. En het tweede niveau is de eisen aan het document zelf. En specifiek voor het procesverbaal van verhoor, want dat is een van de soorten procesverbaal die in de wet worden onderscheiden. Specifiek voor het procesverbaal van verhoor staan er wel wat eisen in het wetboek, inhoudelijke eisen. Die staan er nu ook al in. Die worden ietsje uitgebreid in het nieuwe wetboek. Dus als we iets verder vooruitkijken. En dat zijn eisen die nu alleen gelden voor het verdachtenverhoor en straks ook gaan gelden voor het getuigenverhoor. En die eisen zijn eigenlijk vrij overzichtelijk. Namelijk dat de naam van de verdachte erin moet staan en straks dus ook de naam van de getuigen. Dat datgene wat wordt opgeschreven, zoveel mogelijk in de eigen woorden van de verdachte dan wel de getuige moet worden opgeschreven. Dat het procesverbaal van verhoor zo volledig mogelijk moet zijn. En hele praktische dingen als begintijd en eindtijd van het verhoor. Maar ook of het verhoor is onderbroken. tussentijds. Dus als er een pauze is geweest, moet je ook wel het begin en de eindtijd van de pauze en de reden van die pauze even vermelden. Dat zijn hele concrete dingen die we eigenlijk in de praktijk ook wel al doen. En, ja, wat zat er nog meer? Wie er allemaal aanwezig waren bij het verhoor. Dus was de advocaat erbij, wie was dat, was er een tolk bij, wie was dat, was er misschien een vertrouwenspersoon bij, ouders, weet ik veel. Iedereen die in die ruimte was bij dat verhoor. En uiteindelijk heeft dat allemaal dat doel om te zorgen dat de rechter die uiteindelijk dat procesverbaal zit te lezen, er zich een goed beeld kan vormen van wat dat gesprek, hoe dat gesprek is voorlopen.
+
+
+
+MG: Dus je moet zich een mentaal beeld kunnen vormen van oké, die mensen waren er allemaal bij. Het was een verhoor wat drie en een half uur heeft geduurd, maar ze hebben wel een pauze genomen. En dat was alleen maar even om koffie te drinken. Kan ook. Of er was een pauze om even overleg, dat er even overleg nodig was tussen de verdachte en zijn raadsman. Dat heeft 20 minuten geduurd. Wat er ook in de de in wet staat is dat het procesverbaal zoveel mogelijk in vraag en antwoord vorm moet worden opgeschreven. Dat is iets wat we ook al in de praktijk heel veel doen. En dat is eigenlijk een beetje om, er zijn ook wel processenverbaal van verhoor, met name de wat kleinere zaken die meer een ja hoe ik het noemen. Meer vanuit een monoloog-achtig perspectief, een eerste persoon. Dan is het meneer, ik verbalisant vroeg de verdachte naar zijn relatie met het slachtoffer. De verdachte antwoordde mij, of de verdachte vertelde mij op die vraag. Nou, dat is allemaal een beetje rommelig. En wat eigenlijk de wetgever graag wil, is dat we gewoon zeggen, Vraag, dubbele punt, wat is je relatie met het slachtoffer? Antwoord, dubbele punt, en dan zoveel mogelijk in eigen woorden. En zo volledig mogelijk het antwoord van de verdachte. Oké, volgende vraag. Vraag, dubbele punt, antwoord, dubbele punt. Nou, en zo door. Nou, dat is eigenlijk wat de wet nu zegt.
+
+
+
+MV: Oké. Dus zoals je zei, is de bedoeling om uiteindelijk zo'n compleet mogelijke weergave van de werkelijkheid te presenteren aan de rechter. Wat gebeurt er momenteel als de rechter het idee heeft dat dat niet gebeurd is, niet aan de hand is?
+
+
+
+MG: Dan kan de rechter tegen de officier van justitie zeggen, ik wil hier een uitgebreider procesverbaal, van dit verhoor wil ik een uitgebreider procesverbaal, want wat ik in het dossier aantref is voor mij niet voldoende. Nou, dan gaat de officier terug naar de betreffende opsporingsambtenaar en dan zegt hij, nou, moet uitgebreider. Maak maar een nieuwe. Wordt er een nieuwe gemaakt. En dat gaat naar de rechter.
+
+Dat gebeurt in de praktijk wel, ja.
+
+
+
+MV: Relatief vaak ook, of?
+
+
+
+MG: Ja, geen idee. Geen idee, dat moet ik nog zeggen.
+
+
+
+MV: Oké, ja. Zo simpel kan het zijn om er dan maar een nieuwe aan te maken.
+
+
+
+NG: Ja, of een aanvullend procesverbaal. Als de rechter hele concrete vragen heeft. Van, goh: Ik lees in het procesverbaal dat er wel gesproken is over onderwerp X, maar dat is eigenlijk wel heel sumier. Terwijl het voor mij als rechter wel een heel belangrijk kernpunt is in het hele verhaal. Ik wil daar meer over weten. Dan wordt er een aanvullend procesverbaal van verhoor gemaakt waarin alleen dat aspect even wat uitgebreider wordt, wordt opgeschreven. Dus dat, wat ook wel eens gebeurt, is dat met name als advocaat heel veel ruis veroorzaakt, of heel veel twijfel zaaien rondom een bepaald verhoor, dat dat de rechter gewoon de betreffende opspooringsambtenaar gaat oproepen als getuige. Dus dan wordt het gewoon uitgevraagd in een, eigenlijk in een verhoor van de rechter van de opshooringsambtenaar.
+
+
+
+MV: En is dat dan volledig nieuw of is dat wel gewoon nog gebaseerd op wat die persoon oorspronkelijk opgeschreven heeft? Of dat die het moet verdedigen?
+
+
+
+MG: Ja vaak wel dat laatste. Dan zal de rechter zeggen van nou, meneer de politieagent, ik zie dat u in uw procesverbaal dit of dat heeft opgeschreven over dat verhoor, maar kunt u daar, hoe is dat dan precies gegaan? Of waarom heeft u daar niet op doorgevraagd? Ja, dat soort dingen gebeuren, maar dat gebeurt niet heel vaak. Ik denk dat er vaker een aanvullend of nieuw procesverbaal wordt gevraagd via de officier, dan dat er echt een opsporingsamtbenaar als getuige wordt opgeroepen om voor de rechter te verschijnen. Want dat kost iedereen heel veel tijd.
+
+
+
+MV: Logisch.
+
+
+
+C: Ja
+
+
+
+MV: Dat is een mooi compleet beeld van, dat, hoe het er aan toe gaat, denk ik. Ja, zoals we zeiden, wij denken of wij focussen op een stukje van stel dus op een gegeven moment een transcript lichter van een verhoor en je wil dan misschien met een automatiseringsslag voorkomen dat alles met de hand in de vorm van een procesverbaal gegoten wordt. Zie jij op dat vlak, op dit punt, de grote hordes of uitdagingen of vraagtekens die bij dit stukje naar voren komen misschien?
+
+
+
+MG: Ja, zo'n transcript is natuurlijk niet leesbaar voor een rechter, dat is veel te lang. Dus de gedachte dat je daar toch nog weer een soort samenvatting van maakt in de vorm van een procesverbaal van verhoor is heel logisch. Als je dat met techniek gaat doen, dan Kijk, de wetgeving gaat er vanuit dat een procesverbaal van verhoor iets is wat door een opsporingsambtenaar wordt gemaakt. Niet door een AI-tool. Maar de wets verbiedt ook niet, aan de andere kant, dat die opsporingsambtenaar hulpmiddelen gebruikt om zo'n procesverbouw te maken. Dus het is belangrijk om AI-tools voor dit doel ook echt te positioneren als hulpmiddel voor de opsporingsambtenaar. Niet als vervanging van de opsporingsambtenaar. Dat kan ook niet in het kader van de AI-voordening, maar dat kan ook niet in het kader van het Nederlands wetboek van strafvordering. Dus dan heb je twee keer een nee, dus die kant moe je niet op. Vanuit beide juridische kaders is het wel van belang om dan ook te zorgen dat het niet meer wordt dan een hulpmiddel. Dus hoe zorg je ervoor dat die opsporingsambtenaar niet knetterlui wordt? Mooi transcript, gaat pop, naar de AI-tool. Dat ding spuugt iets uit wat er redelijk ordentelijk uitziet. Vraag, antwoord, keurig gestructureerd volgens de wettelijke eisen.
+
+Hoe zorg je ervoor dat die opsporingsambtenaar dan niet klakkeloos handtekeningen onderzet? Want die handtekening moet er nog steeds onder. En die moet niet betekenisloos worden. Daar zit denk ik het grote vraagstuk. Hoe zorg je er in het proces voor, in de werkwijze, dat die handtekening niet betekenisloos wordt? Juist. Ja, veel platter kan ik het niet maken. Heel mooi, duidelijk. Dus ik denk zeker omdat, dat vind ik het spannend aan deze ontwikkeling, dat je twee AI toepassingen achter elkaar schakelt, dus serieel, die beide moeten voldoen aan de AI act, dat je eigenlijk op beide een man in the middle f een man in the loop wil hebben. Dus dat transcript moet als het ware gecheckt worden door een mens en dan de samenvatting die eruit komt in de vorm van een procesverbaal van verhoor moet ook gecheckt worden door een mens. En juist omdat je het serieel schakelt, is het wel zo sterk als de zwakste schakel. Dus als dat transcript niet goed gecheckt wordt, dan is de kans groot dat er in dat samenvatten ook iets fout gaat. Wat misschien heel moeilijk te constateren is door degene die daar de check op doet. Dus bijvoorbeeld een van de eisen kan zijn dat degene die het procesverbaal uiteindelijk ondertekent, dat die wel bij het verhoor aanwezig moet zijn geweest. Dat klinkt wel simpel, maar dat is wel goed om dat even ergens vast te leggen. En ook te borgen dat dat gebeurt, op een of andere manier. Nou ja, veel verder dan dit kom ik ook niet, maar nadenken over hoe zorgt het er nou voor dat die opsporingsambtenaar, ook zonder dat hij daar weer verschrikkelijk veel tijd mee kwijt is, echt met een hand op het hart zo'n handtekening kan zetten, waarmee hij eigenlijk verklaart al het bovenstaande klopt. Dat is het belangrijkste. Hier is geen hallucinatie, hier is geen, hier is niet dat de AI die het transcript heeft gemaakt, net een ontkenning niet heeft getranscribeerd die wel is gezegd. Nou ja al dat soort dingen die fout kunnen gaan.
+
+
+
+MV: Ja, ik hoor ook terecht, dat is een mooi mooi punt, het een beetje het telefoonspelletje met de om de beurt in elkaars oor fluisteren en dat je aan het eind van de keten een heel ander verhaal hebt. Dat risico ontstaat hier natuurlijk ook. Ja, ja. Mooi, helder.
+
+
+
+MG: We hebben ook. Het voordeel is natuurlijk wel en dat dat litigeert gewoon een deel Nou, het mitigeert in ieder geval het risico dat echt een keer een persoon bijvoorbeeld ten onrechte de gevangenis ingaat omdat er ergens in dit proces iets verschrikkelijk fout is gegaan. Dat is natuurlijk de grote angst. Dat is wat we moeten voorkomen. We zeggen altijd liever tien schuldigen ten onrechte vrij dan één onschuldige ten onrechte in de gevangenis. Dat moet ons frame of mind zijn. Belangrijk uitgangspunt inderdaad. We hebben een opname. We hebben de audio, laten we zeggen. En we hebben het transcript. Dat moet we dus ook niet weggooien totdat die zaak helemaal afgerond is. Want als er dan twijfel ontstaat, kunnen we altijd het transcript teruglezen. En als er dan nog twijfel is, kunnen we de opname terugluisteren. Dus er is altijd een fallback. Maar dat is natuurlijk alweer heel veel werk en dan moet bovendien op het goede moment niet te laat twijfel ontstaan. Dus je moet zorgen dat, je moet een paar dingen doen, je moet zorgen dat je de bronbestanden niet weggooit en je moet zorgen dat er zoveel mogelijk prikkels in je systeem zitten, ik bedoel niet alleen technisch systeem, maar vooral in je werksysteem. Om te zorgen dat we op de goede momenten twijfels kunnen ontstaan. Daar waar ze zouden moeten ontstaan. Dus ja, hoe bouw je dat?
+
+
+
+MV: Kijk, we hebben een paar mooie ingrediënten nu al verzameld. Dat is heel prettig. Daar kunnen we wel een stukje mee verder. Maar inderdaad, je ziet dat het een veel groter vraagstuk is dan alleen technisch zorgen dat dingen werken. Dat maakt het ook uitdagend en leuk.
+
+
+
+MG: Misschien kunnen we wel leren van de medische toepassing. Waar natuurlijk ook veel wordt getranscribeerd en wordt samengevat. Daar was jij ook mee bezig, of ben je betrokken toch Casper?
+
+
+
+C: Ja, mijn begeleider is daar ook mee betrokken. Dat is de Care2Report.
+
+
+
+MG: Ja, precies. Hoe gaan ze daarom met meer procesvragen? De techniek is misschien ongeveer hetzelfde. Met dezelfde uitdagingen. Maar hoe gaan ze om met dit vraagstuk? Hoe zorg je ervoor dat het dat er niet gaandeweg ongedetecteerd fouten ontstaan. Want ook in de medische toepassing kunnen daar verschrikkelijke consequenties aan zitten natuurlijk.
+
+
+
+C: Ik weet het niet exact zeker, maar volgens mij doen ze wel een soort continue evaluatie van matching van de Het transcript en de audio. Is de semantiek nog hetzelfde? Is de BERT score nog hetzelfde? En lijken de spreiding van het soort en het aantal woorden van de SOAPsamenvatting wel op wat er daadwerkelijk gezegd is? Dus daar zit wel een laag confirmatie overheen, maar de zeker weten van of het goed is of niet, volgens mij weten ze dat helemaal niet. Zeg maar, ze doen het gewoon op onderbuikgevoel.
+
+
+
+MV: Ook daar En daar zit wel de human in the loop gedeeld zit er ook wel weer vast. Maar volgens mij hebben ze daar inderdaad ook gedaan dat je los van de samenvat AI ook een extra AI stukje hebt lopen die kwaliteitscontrole doet of checkt of dingen goed gaan. En zo kan je aan beide kanten misschien bepaalde zwakheden afvangen. Maar dan wordt wel de oplossing meteen Weer complex ervan, inderdaad.
+
+
+
+C: Wel een grappig zij-effect daarvan is als je dus de checkende robot zo instelt dat hij minstens een bepaald percentage weggooit hoe dan ook dat je dan ineens best wel hoge kwaliteiten marges kan gaan halen. Want dan heffen ze elkaars onverwachte fouten op om het even zo te verwoorden. Dat is wel heel grappig. Maar dat is heel jong onderzoek nog. Want dat programmeerparadigma is pas met ChatGPT 5 meegekomen. En daar zijn we gewoon nog niet zo heel ver in. Maar dat is wel heel interessant. Want dan heb je dus in plaats van een human in de loop, heb je eigenlijk een agent in de loop systeem. Met een human over de loop ernaast. Wat zou jij daarvan vinden? Dus dat er een agent is die checkt van, oh ik heb dit transcript net gekeken en ik heb even deze verbaal gekeken, het documentje wat nog geen procesverbaal is, maar wel alvast een documentje is. En volgens mij lijkt ze op elkaar, dus jij als mens mag er nu ook naar kijken.
+
+
+
+MG: Ik denk dat je een beetje in het dilemma terechtkomt dat hoe meer agents je gebruikt en ertussen zet, en zeker als dat, zeg maar, controle agents zijn, dat gebruikers uiteindelijk, de menselijke gebruiker misschien uiteindelijk nog luier wordt, nog makkelijker zegt, oh, ik heb drie groene vinkjes van die agents, het zal wel goed zijn. Ik moet naar mijn volgende zaak. Er zit iemand op me te wachten. Of mijn dienst is afgelopen en ik heb al zoveel overuren.
+
+
+
+C: Mijn vrouw staat thuis met het avondeten.
+
+
+
+MG: Ja. Dus ik vind dat Het kan contraproductief zijn.
+
+
+
+MV: Het was toch ook hard wat ideeën te toetsen, maar wat als een een rechercheur in interactie met het systeem gezamenlijk met de AI zijn procesverbaal op moet bouwen zodat hij keuzes moet maken uit stukken tekst bijvoorbeeld of per blokje dingen langzaam opbouwt of zelf dingen aanstreept of weghaalt zou je daar ruimte voor zien? om toch in ieder geval een manier om die rechercheur goed bij het hele proces betrokken te houden
+
+
+
+MG: Ja, dat lijkt me al een stuk beter. Ja. Ja, en misschien kun je het ook wel vormgeven in met name die tweede stap van transcript naar proces voor bouw. Dat je daar niet één versie van laat aanbieden aan de rechercheur, maar misschien wel drie. Van nou, op basis van dit transcript heb ik deze drie versies gemaakt. Zegt de AI dan. Welke vind je het beste? Dus je moet eigenlijk meer in de psychologie van de opzorgingsambtenaar je verdiepen dan in de techniek bijna. Die gewoon moet goed zijn, weet je wel. En daar zijn jullie veel beter in dan ik. Dat kun je misschien certificeren of steekproeven doen. Dat moet je ook allemaal doen. En dat moet je ook opschrijven en transparant in zijn richting de buitenwereld. Maar mijn zorg zit hem eigenlijk vooral in die overbelaste rechercheur of zorgingsambtenaar die dit geweldig gaat vinden als hij alleen maar eventjes iets snel door te lezen en zijn handtekening eronder hoeft te zetten. Dat moet je niet te makkelijk maken.
+
+
+
+MV: Dat is een heel mooi punt om mee te nemen. Ik denk inderdaad dat de oplossing daarvoor iets buiten Casper z’n scope is, maar het is een heel mooi aanknoopingspunt om weer een vervolg...
+
+
+
+C: Iemand anders die mens-computer-interactie studeert.
+
+
+
+MV: Precies, ja.Zt zie je dat er heel veel vakgebieden bij elkaar moeten komen op de juiste manier om dit soort dingen goed te doen. Dat maakt het ook een rol op. En specifiek nog even terug naar hoe procesverbalen nu misschien werken. We hebben ook gevonden dat als er een schrijftolk iets aan bijgedragen heeft aan het proces, dat dat weergegeven moet worden in het uiteindelijke product. Zou je zoiets vergelijkbaars ook verwachten als je de stappen met AI gaat doen?
+
+
+
+MG: Ja, honderd procent. Ik stel me dan voor dat er bij zo'n procesverbaal eigenlijk standaard een soort bijlage zit, standaard tekst, met de allerlaatste weergave van, oké, voor dit procesverbaal zijn de volgende hulpmiddelen gebruikt. Het verhoor is opgenomen met die en die apparatuur. De opname is gevoed aan die en die AI-tour van de politie. Die tool is laatstelijk gecertificeerd op dat en dat, die datum, door die en die instituut. En die hebben daar die en die onderzoeksmethode voor gebruikt. Zie rapport te downloaden op www.politie.nl. Dit transcript is gevoed aan AI-tool huppeldepup voor het maken van dit procesverbaal. Ook een riedeltje, laatstelijk gecheckt, versie zusenmezo. Misschien moeten we er wel twee handtekeningen onder zo'n soort procesverbaal. Niet alleen maar onder het procesverbaal zelf, maar ook onder een soort verklaring. Waarbij de opsporingsambtenaar ook weer op ambtseed, hand op de hart zegt, ik heb dit procesverbaal zoals het mij werd aangeboden door de bovengenoemde AI-tool. Gecontroleerd op juistheid, volledigheid, fouten. Een riedeltje. En ik heb geconstateerd dat dit een goede weergave is van het verhoor. Er is niets relevant weg te laten. Nou, zo een paar dingetjes. En nog even een handtekening. Ook dat is weer in de psychologie van die opsporingsambtenaar, als hij ook daarvoor moet tekenen. Ook dat kan natuurlijk uit gemakzucht te makkelijk gaan. Maar dan wijs je hem even op zijn verantwoordelijkheid van, oh, als jij dit nu in het dossier stopt.
+
+Is het wel on you als het niet klopt, hè? In dat soort dingen zoek ik het. We moeten hoe dan ook volledig transparant zijn.
+
+
+
+MV: Volledig transparant:
+
+
+
+MG: Hoe transparanter, hoe beter. En de vraag wordt dan op een gegeven moment Moet je niet zoveel van dit soort waarborgen in het werkproces gaan inbouwen, dat de winst misschien wel minder is dan je nu denkt?
+
+
+
+MV: Daarmee bedoel je dat de controle op een gegeven moment meer tijd gaat kosten dan het Ja, oké, ja. Ja, dat zou niet de bedoeling zijn. Nee, nee, dat zou...
+
+
+
+MG: Dan ga je weer even naar de business case kijken. Kijk, we maken, hoe is het? 200 tot 300.000 van dit soort processen verbaal per jaar. Verdachten plus getuigen. Dus het is wel volume werk. Dus je kunt hier wel, als je hier een paar uur per verbaal af weet te regelen, dan heb je best wel een hoop ruimte om om ook nog flink wat aan de controlekant, de waarborgenkant te doen zonder dat je per saldo hetzelfde uitkomt als nu of zelfs negatief. Dus ik heb daar niet per se op voorhand zorgen over dat ik zeg van hou er maar mee op met deze hele ontwikkeling. Maar ik probeer ook een beetje tegen iedereen te zeggen van reken je niet op voorhand al te rijk.
+
+
+
+MV En hou het doel scherp gedurende dat je bezig bent inderdaad, ja.
+
+
+
+MG Misschien zit de winst, de echte grote winst, niet per se in het domein verhoor, maar misschien wel meer in het domein tap.
+
+Weet ik niet. Als je gewoon puur kijkt naar het aantal uren gesprek, wat uiteindelijk je via allerlei tools probeert in een bepaalde vorm te krijgen. Dan zeg ik ja, 300.000 verhoren per jaar die gemiddeld een uur duren. Dat is 300.000 uur. Hoeveel uurtap gesprekken hebben wij? I don't know. Ik weet het echt niet. Maar ik zou me kunnen voorstellen dat het meer is dan 300.000. Waarbij overigens dezelfde problemen gelden. Ook een transcript wat En dan heb je het ook nog misschien over met een telefoonlijn wat moeilijker, maar aan de andere kant heb je misschien maar twee gespreks, over het algemeen maar twee gespreksdeelnemers. Misschien allemaal net iets makkelijker om daar een goed transcript van te maken, maar dat zou wel heel veel, heel veel transcripten. Daar zijn heel veel schrijftolken mee bezig. We huren zelfs rechtenstudenten in, criminologiestudenten om tap voor trap gesprekken uit te luisteren. Die krijgen dan even een BOA opleiding in een koptelefoon en die zit er gewoon niks anders te doen dan naar telefoongesprekken tussen boeven te luisteren en letterlijk over te tikken.
+
+
+
+MV: Wauw. Ja.
+
+
+
+MG: Nou, misschien zit daar wel meer winst en minder risico. I don't know.
+
+
+
+MV: Goeie vraag.
+
+
+
+C: Goeie vraag.
+
+
+
+MG: Maar goed, jullie zijn met z'n verhoren bezig.
+
+
+
+MVL Dat staat wel een beetje om te denken, heel goed. Misschien ook, nou ja, in dat kader misschien ook vanuit je ervaring, als je kijkt naar eerdere soorten innovatietrajecten, iets binnen de politie, niet eens specifiek AI te zien. Zijn daar juridische schuringen of elementen die je wel eens meegemaakt hebt of daarin gezien?
+
+
+
+MG: Een beetje vergelijkbaar met... Nou ja, ik heb wel vaker meegemaakt dat uiteindelijk als je er echt helemaal goed in gaat en echt kijkt van hoe kunnen we nou In ieder geval zorgen dat ons huidige kwaliteitsniveau niet omlaag gaat. Of we niet meer risico's gaan creëren. Als je dan kijkt hoeveel waarborgen je eigenlijk al moet inbouwen. Dat als je dat allemaal bij elkaar optelt, dat je misschien achteraf denkt van nou, misschien moesten we maar gewoon blijven doen wat we doen. Dat gebeurt wel vaker. Er is geen reden om het niet goed uit te zoeken. Maar dan wel graag snel. Veel fast, zou ik maar zeggen. En soms zitten er ook heel onverwachte dingen in. Ik kan me nog een traject herinneren van een paar jaar geleden. Dat ging toen over dat wij als politie heel erg aan het lobbyen waren voor een bepaalde wetswijziging. En die wetswijziging is uiteindelijk ook gekomen. En dat kwam erop neer dat daarvoor, we als toevallig ook weer de telefoon tappen, als we een telefoonlijn wilden tappen, dan moesten we naar de rechtercommissaris voor toestemming. En dan gaf de rechtercommissaris toestemming om één telefoonnummer te tappen. Dus alle inkomende, uitgaande gesprekken van dat telefoon, mochten we dan tappen. En als we er gedurende het onderzoek achter kwamen dat er nog meerdere telefoonnummers waren die bijvoorbeeld dezelfde verdachte gebruikten dan moesten we weer terug naar die rechtercommissaris, nieuwe machtiging aanvragen met een nieuw telefoonnummer erin kregen we die machtiging, mochten we dat gaan tappen. En zo gingen we eindeloos heen en weer naar die rechtercommissaris. En dat is een hele hoop papierwerk. En op een gegeven moment hadden we bedacht, er moet een wetswijziging komen, waarin we eigenlijk gewoon tegen die rechter commissaris kunnen zeggen van, wij willen deze verdachte tappen, welk nummer die ook gebruikt. Nou, een hoop gelobby heeft jaren geduurd, uiteindelijk is die wetswijziging er gekomen. Dus toen dachten we, jippie. Nu kunnen we eindelijk, zijn we van een hoop papierwerk af. Wat het bleek? Ons systeem waarin we die taps registreren, op de begintijd en eindtijd van de gegeven toestemming registreerden, was helemaal niet geschikt om op naam een toestemming te registreren. Dat was op nummer. En dat was een extern systeem, konden we niet zo maar zelf aanpassen. En wat bleek ook, rechtercommissaris hadden er helemaal geen zin in. Die deed, dit mocht wel, maar ze deden het niet. Dus toen ik drie jaar later eens een keer bedacht van goh, hoe zou ik daar nou eigenlijk mee lopen met die nieuwe wetsmogelijkheid? Toen ben ik eens wat rond gaan bellen in de organisatie. Toen kreeg ik alleen maar te horen van ja, dat hebben we drie keer geprobeerd, maar dat lukt niet. Dus we zijn er maar weer mee opgehouden. Zonder. Dus dat was voor mij wel een leermoment dat ik dacht ja, als jurist kan ik helemaal bedenken hoe het allemaal juridisch in elkaar moet zitten en dan kan ik dat ook nog voor elkaar krijgen via zelfs een wetswijziging. Maar er is nog meer nodig, kennelijk.
+
+
+
+C: De menselijke welwinnendheid om het mee te nemen. En dat raakt ook weer aan het feit dat je de psychologie van de opsporingsambtenaar heel erg mee moet nemen in het ontwerp van de software die je wil gaan bouwen. En dus ook dit soort tapsoftware. Ja, en dat is heel interessant, maakt het ook heel moeilijk. Maar ik wil eigenlijk even terugcirkelen naar een eerder punt. We hadden het over dat er zo'n 200.000 tot 300.000 procesverbalen van verhoor hoorde ik jaarlijks langskomen. Een aantal van dat zullen enorm complexe, enorm lange zaken zijn die een robot gewoon simpelweg niet kan bevatten, want om echt een procesverbaal goed te schrijven, dan moet je gewoon heel veel zaakskennis hebben, heel veel dossierkennis lijkt mij. Maar er zijn een aantal daarvan zijn ook jongens gewoon die om drie uur s'nacht aan het wild passen zijn en daarna iemand uitscholden en dan kom maar even mee, want jij hebt duidelijk een boete nodig om , te leren, om dit af te leren. En dat lijken mij zaken die makkelijker zullen zijn voor zo'n, voor een degelijk systeem. Denk jij dat er een scheidingslijn te trekken valt in bepaalde soort verhoren op een bepaalde manier? Die wel of dan niet beter te bevatten zijn voor zo'n robot?
+
+
+
+MG: Ja, ik weet niet of het een soort voor woorden koppel je het misschien aan het type delict ofzo, of Ehm Tja, moeilijke vraag. Hoe minder gespreksdeelnemers, hoe makkelijker. Hoe korter, hoe makkelijker.
+
+
+
+MG: Ja, ik zit me voor te stellen dat, kijk, sommige verdachteverhoren zijn echt heel lang, uren achter elkaar. Daar ligt dan een verhoorplan, hè, waarin die verhoorders dan precies weten van, nou, dit, hier, op deze punten moeten we allemaal ingaan in dit verhoor. Deze informatie kunnen we al wel aan deze verdachte geven. Dit moeten we vooral nog even weghouden bij die verdachte. Daar moet hij zelf mee komen, want dan is het extra krachtig. Dat soort dingen. Ja, dat zijn wel hele ingewikkelde gesprekken. Die soms ook van de hak op de tak gaan. Die ook hele een hoop. aan het concentratievermogen van die verhoorders. Misschien is dat een vraag die je eigenlijk ook wel aan verhoorders kunt stellen. We hebben natuurlijk een hele grote groep heel goed opgeleide verhoorders in de organisatie, die professioneel verhoorders. Die hebben ook een vakgroep waar ze elkaar ontmoeten landelijk. Misschien een hele goede vraag om aan die club te stellen van wat zijn nou verhooren Waar jullie ook op het toppen van jullie kunnen moeten zijn. Dat is misschien dan ook een beetje de groep voor waar je misschien ook met techniek niet zo heel direct, of misschien juist wel.
+
+
+
+C: Eigenlijk zoek ik juist het voor waar ze op de onderkant van de kunnen zitten. De voor die zo min mogelijk moeite kost, maar die wel vaak genoeg voorkomt dat er winst in zit om het te automatiseren tot een bepaalde hoogte, beter te ondersteunen. En daarin zeg je ook bijvoorbeeld al wel iets moois met zo'n verhoorplan. Ik weet niet hoe dat gaat, ik ben zelf nog nooit verhoord wil ik eigenlijk graag zou houden, moet ik zeggen. Maar dat is bijvoorbeeld relevante context voor zo'n robot als die zo'n procesverbaal of de voorzet of de opzet of de ondersteuning daarmee bezig is. Is dat ook context waarvan wij zeggen dat zou die gewoon mee mogen nemen. En dat willen we hem ook meegeven.
+
+
+
+MG: Ja, ik weet te weinig van de werking van AI om daar iets heel stevigs over te zeggen, maar een verhoorplan is eigenlijk gewoon niet veel meer dan een soort matrix met een lijstje met gespreksonderwerp. En soms zit daar dan ook, volgens mij zijn er allerlei varianten van een verhoorplan, dus dan zou je er een paar moeten bekijken. Ik weet ook niet bijvoorbeeld of daar strategie in staat. Dat zou denk ik wel heel, dat zou wel een heel interessante context van de AI tool zijn. Als de context, als de strategie is, noem ze het ook weer, omcirkelen. Dat is zo'n strategie, zo'n gehoorstrategie. Dat je de verdachte eigenlijk via allerlei vraagstellingen en stukjes informatie eigenlijk in het nauw brengt, mentaal, om te kijken of hij allerlei inconsequenties in zijn verklaring, eer afgegeven verklaringen, of hij daar toch iets over wil gaan verklaren. Ik kan me voorstellen dat dat voor een AI-tool heel goed is om te snappen hoe dat dan gaat. Maar aan de andere kant, weet je, wat een rechter uiteindelijk gewoon wil om daar naar terug te keren is, oké, het verhoor begon om 12 uur middags. Die en die en die piepeltjes waren erbij. De eerste vraag was dit, het eerste antwoord was dat, de tweede vraag was dit, de antwoord dat, dat, dat, dat, dat, dat. Gewoon een chronologisch verhaal. Zoals het gesprek verlopen is en welke, welk verhoorplan er achter zat, maakt eigenlijk voor die rechter niet zoveel uit. Wat de rechter wil kunnen zien is. Hoe is het gesprek verlopen en is het gesprek een beetje volgens de regelen der kunst gegaan? Dus is die verdachte niet, want je mag geen oneigenlijke druk uit oefenen op de verdachte, dat staat ook in de wet. Dus je mag niet tegen een verdachte zeggen, als je niet bekend, ga je acht jaar de cel in, als je wel bekend, ga je twee jaar de cel in. Dat soort dingen mag je niet tegen een verdachte zeggen. je mag hem ook niet op een andere manier onder druk zetten van ach ach ach als jij niet verklaart dan ja dan is de kans groot dat je toch de gevangenis ingaat en hoe moet het dan met je arme kindertjes dat soort dingen mag je misschien net wel zeggen misschien net niet afhankelijk van hoe dat wil de rechter in in zo'n zo'n uiteindelijk document kunnen teruglezen hoe is dat dan gegaan, hoe is deze verdachte bejegend? Dat moet die er uit weten te halen.
+
+
+
+MV: Dat blijft de kern, zeg maar. Dus ik zie ook een mooie vervolgvraag voor ons om even waar het kan goed met een rechter om tafel te gaan. Bijvoorbeeld kijken wat verwacht jij nou echt uiteindelijk voorgeschoten te krijgen en welke garanties heb jij nodig om Dit op de juiste manier op te pakken, zeg maar. Dat is ook een mooi punt.
+
+
+
+MG: Ja, ja. Een van de dingen die een rechter dan sowieso gaat zeggen is, het moet niet te lang zijn.
+
+Maar dat...
+
+
+
+C: Met een zucht
+
+
+
+MG: Ja. En dat moet ook niet te kort zijn, want als het te kort is, moet ik die stomme filmpjes gaan terugkijken. Of moet ik die onleesbare transcripten, moet ik gaan teruglezen. Dat is ook niet de bedoeling. Het moet precies genoeg zijn. Niet te kort en niet te lang. Nou, succes.
+
+
+
+MV: In principe is het een mooie wisselwerking, want aan de ene kant wordt er teveel opgeschreven met tegenzin en aan de andere kant wordt misschien met gezonde tegenzin niet te lange teksten ook weer gewaardeerd, maar het moet wel. Dus dat is het wel grappige. We gaan proberen die twee werelden wat meer kennis met elkaar te laten maken. Misschien dat dat
+
+
+
+MG: Ja, een gedachte die ik ook wel eens heb gehad, wij dat ook al bespraken, Casper, in ons vorige gesprek, maar je kunt je ook natuurlijk afvragen, waarom zijn wij als politie zo druk bezig met dit vraagstuk? Je zou ook kunnen zeggen, weet je, rechtelijke macht, jullie kunnen ook AI doen, je krijgt van ons audio en transcript en wij garanderen tot op zekere hoogte met al wij waarborgen dat dat transcript klopt. Stel je eigen vragen maar aan dat transcript.
+
+En als jullie dat standaard pront willen maken zodat niet iedere individuele rechter in iedere zaak weer hoeft te bedenken hoe die dat transcript gaat bevragen. Prima. Maar jullie feestje. Wij hebben het voor gedaan. Hier. Eén op één. Dit is wat er gebeurd is. Audio, video, transcript. Succes. Gaan ze ook niet accepteren, maar weet je het. Het is wel heel goed inderdaad om met rechters te gaan praten. Wat hebben jullie nou nodig?
+
+
+
+C: We hebben niet zo enorm veel tijd meer, dus we hebben iets genaamd focusgroep bingo voorbereid. Nu was jij bij die focusgroep, als ik me dat goed herinner.
+
+
+
+MG: Nee, ik kon toen niet.
+
+
+
+C: Nou, dan komt het mooi uit. Deze focusgroep bingo is eigenlijk een samenvatting van de meest relevante termen die zijn opgekomen voor de focusgroep. Of tijdens de focusgroep, door de focusgroep. En wij zijn vooral benieuwd naar jouw mening als je hier zo naar kijkt. Wat vind je? Wat zijn de woorden die in je opkomen? Welke woorden springen er uit? Welke woorden vallen weg? Wat mist er? Wat past er heel goed? Als je zegt van nou, ik vind hier niks van, is dat ook iets? Dus dat is ook een resultaat. Laat dat dan weten. Maar verder ben ik erg benieuwd.
+
+
+
+MG: Ja, gebruik. Een aantal termen heb ik ook al gebruikt, denk ik, in dit gesprek. Gebruik ik verderop in de rechtsketen. Transparantie en uitlegbaarheid. Menselijk toezicht. Dat zijn denk ik de drie belangrijkste. AI puur als accessoire, als daarmee wordt bedoeld van het moet wel een hulpmiddel blijven, dan hoort die ook bij mijn top vier.
+
+
+
+C: Volgens mij werd daarmee bedoeld dat de uitzondering op hoog risico binnenin de AI verordening. Dat dat, als ik me goed herinner, dan staat daarin van, nou ja, als AI pure als accessoires wordt gebruikt in een formele administratieve taak dan, ook al is het in een hoog-risico-context, is het niet per se hoog-risico. Dan kan daar een uitzondering op gemaakt worden.
+
+
+
+MG: Ah, ja, oké.
+
+
+
+C: Hoe zou je dat relateren aan aan de ene kant bijvoorbeeld transcriptie-AI tegenover bijvoorbeeld een PV-AI?
+
+
+
+MG: Nou, ik vind een PV-AI risicovoller dan een transcript-AI. Maar in termen van de AI-verordening, hoewel het nog niet helemaal uitgekristalliseerd is, heb ik begrepen, van Kelly Vink. Maar de manier waarop wij, ik vind dat de manier waarop we dit soort toepassingen zouden moeten inregelen in onze organisatie, moet ook zijn op een manier dat het niet meer is dan een hulpmiddel. En daarmee voorkom je dat je een aantal eisen moet voldoen volgens de AI-verordening. Of dat het zelfs verboden is volgens de AI-verordening. Maar een andere vorm van toepassen zouden we volgens mij ook niet moeten willen. Dus daar is die regelgeving gewoon prima en daar moeten we ons gewoon invoegen.
+
+
+
+MV: Zijn er los van de termen die er nu staan naar jou inzien misschien termen die ontbreken of iets wat je verwacht had wat hier tussen zou staan?
+
+
+
+MG: Misschien, Rol van de opsporingsambtenaar, verantwoordelijkheid van de opsporingsambtenaar. Hier staat verandering van de opsporingshandelingen en menselijk toezicht. Dat gaat allemaal een beetje die kant op, maar heel expliciet de rol en verantwoordelijkheid van de opsporingsambtenaar.
+
+
+
+MV: Mooi, dankjewel. Kijk, en dan kijk ik naar Casper. We hebben het wel enigszins een beetje besproken het idee, maar als je wil kunnen we nog even kort een demo laten zien van puur wat is er technisch mogelijk. We hebben volgens mij een gedeelte daarvan al besproken tijdens het gesprek, maar alsnog als je dat leuk vindt.
+
+
+
+C: Ja, er is heel veel technisch mogelijk. We hebben één korte demo gemaakt wat eigenlijk de simpelste manier is om dat te doen. Even kijken of dit zo werkt. Als het goed is zie je nu iets veel vellers. Dit is gewoon het uploaden van een transcript en dan gaat die even heel hard nadenken en dan wordt er een pdfje gedownload wat in principe in de vorm is van een procesverbaal. Dus nou, je ziet dat hij een transcript van een winkeldiefstal uploadt. Echt even goed nadenken. En op dit moment is hij uit dat transcript is die informatie als de namen van de opsporingsambtenaar, de locatie van het verhoor, de identificatie van de verdachte, dat is hij allemaal uit dat transcript aan het trekken. En dan denk je van, oh, dit zijn mijn goeie dit zijn de goeie antwoorden. En dat giet hij dan zo in een mooi pdfje, die op het perfecte moment klaar is. En dat zie je dan ook hier op het scherm. Nou ja, dat logo heb ik nooit echt werkende gekregen. Dat is een beetje jammer. Maar bijvoorbeeld op een bepaalde datum. Die datum heeft de robot vastgesteld. En dat is in lijn met de datum die op het transcript staat. Nou, die namen, dus zowel de naam van de verdachte als van de opsporingsambtenaren, heeft de robot vastgesteld. Maar dit hier wel is een volledig mens-onafhankelijk systeem. Ik upload iets en er komt iets uit. Een ander ontwerp van een systeem wat een vriend van mij, die mens-computer-interactie studeert, heel interessant vindt is eigenlijk hetzelfde idee. Je upload iets, maar dan opent er een scherm met praktisch een leeg documentje met aan de zijkant blokjes aan tekst. Dit zijn alle namen die de robot heeft gevonden in het transcript. Wil je hier iets mee? Dit zijn alle ontlastende uitingen die de robot heeft kunnen vinden. Wil je daar iets mee? En dan kan je ze zo slepen en aanpassen. Nou ja, dat zijn twee verschillende manieren om dit in te stellen. Als je dit zo hoort, wat denk je dan? Wat zou je ervan vinden? Zes maanden geleden opgenomen, by the way.
+
+
+
+MV: Oeh. Ja, ik zou eigenlijk allebei wel in proeven willen hebben. Ik zou echt niet kunnen voorspellen welke beter werkt. in termen van welk eindresultaat bevat nou de beste weergave van het verhoor.
+
+
+
+C: Oké, en als we dat iets meer loslaten en iets meer kijken weer teruggaan naar de psychologie van de opsporingsambtenaar. Welke zou beter in een eerlijkere, transparantere, accuratere volledigere, betere workflow zijn?
+
+
+
+MG Ja, je bent geneigd om te denken, die tweede variant, dat je daarmee de opsporingsambtenaar toch meer aan het werk hebt. Zou mijn aanname zijn, maar ik weet ook niet welke risico's daarin zitten. Als ik jou hoor zeggen, de AI haalt de ontlastende elementen uit het gesprek. Wil je daar iets mee? Dan denk je, ja, wil je daar iets mee? Dat moet er gewoon in! De keuze moet je helemaal niet aan de opsporingsambtenaar laten. Weet je wel. Dus dan is dat net misschien het verkeerde voorbeeld. Maar ja, op een of andere manier die opsporingsambtenaar actief laten zijn om te Zorgen dat er uiteindelijk iets fatsoenlijks uitrolt, hoe meer hoe beter, tot het punt dat het geen toegevoegde waarde meer heeft, geen tijdsbesparing meer opleverd ten opzichte van het oude werk. Dat zeg ik wel, maar aan de andere kant, dat kan ook zijn dat ook al kom je uiteindelijk tot een interactie met de opsporingsambtenaar, die misschien evenveel tijd kost als dat je het helemaal zonder hulpmiddel zou doen. Misschien zou het wel meer tijd kosten dan als je het helemaal zonder hulpmiddel zou doen. Als het resultaat ervan is dat gemiddeld gewoon de kwaliteit van onze PV-verhoor omhoog gaat. Omdat het met gebruik van het hulpmiddel het gewoon beter wordt. Dan kun je daar ook nog over praten of je dat niet toch dan wil. Snap je wat ik bedoel?
+
+
+
+C: Ja, daarmee stip je aan dat er andere verbeterpunten zijn dan enkel tijdsgebruik of kwaliteit van het document bijvoorbeeld. Misschien moraal van de mensen die het moeten doen, dat iemand helemaal moe is van dezelfde kut-pv's optypen van dezelfde kutjongens die maar in dezelfde kutbomen blijven plassen. Dat gewoon een robot zegt van nou deze boom is weer hier geplaatst op ongeveer dit moment. Dat dat tijd en moeite scheelt en daarom Hoe noem je dat mentale overload? Daarom werkdruk?
+
+
+
+MG: Ja, ja. Of als je het toch gaat gebruiken in wat grotere zaken, dat rechters misschien wel zeggen van goh, oké, het is misschien ietsje langer, jullie nieuwe soort proces verbaal, maar het is wel echt Het is allemaal hetzelfde. Er is geen verschil meer tussen verbalisant Janssen en Pieterse. Het is gewoon mooi gestandaardiseerd. We weten waar wat staat. Ophoud is netjes. Wij worden hier heel blij van. Dit bespaart ons werk. Je moet het niet alleen maar met de politie bekijken. Je moet het over de hele keten heen eigenlijk. Kijken wat de voor- en nadelen zijn van een andere werkwerk.
+
+
+
+C: Ja, dat is waar. Dat betekent wel dat ik meer moeite moet doen, moet ik zeggen, maar dat is wel waar.
+
+
+
+MG: Ja, scopen moeten jullie zelf doen.
+
+
+
+C: Daar ben ik nooit goed in geweest. Nee,
+
+
+
+MV: Daarom kijk ik ook mee. Ik vind het mooi.
+
+
+
+C: Dankjewel. Oké. Ja, ik heb eigenlijk nog wel één leuke vraag volgens mij. Want we hebben het over bijvoorbeeld de seriële AI gehad. Dus aan de ene kant die transcripten maakt en aan de andere kant iemand die ondersteunt voor PV's. Dit zijn wel twee verschillende werkzaamheden. Zouden die dan vanwege de natuur van de werkzaamheden en de omstandigheden ook anders behandeld moeten worden misschien? Ja. Of is robot is een robot is een robot?
+
+
+
+MG: Ja.
+
+
+
+C: Robot is een robot is een robot.
+
+
+
+MG: Ja, ik, ga daar maar vanuit. Ja. Ja, nogmaals wat ik zei, dat het transcriberen is neutraler. Als werkzaamheid. Je hebt audio en daar maak je tekst van. Er zit eigenlijk geen Ja, daar heb je heel veel taalintelligentie voor nodig, maar geen andere intelligentie. Maar die tweede stap, dan gaat het over ordenen, samenvatten. Uiteindelijk moet je terug van, wat is het, zes A4'tjes van een uur gesprek, transcript, of acht, wat is het, naar twee A4'tjes. Dus je gaat dingen weglaten. abstraheren, samenvatten. Dat is een heel anders en veel minder neutraal type werk. Met heel veel meer afslagen die je kunt nemen. Dus veel meer risico op bias, onwetendheid, slordigheid. Dus de eisen zijn hetzelfde, juridisch, maar de mate waarin je allerlei waarborgen moet gaan inrichten om te zorgen dat je aan die eisen blijft voldoen en dat je dat ook kunt uitleggen en kunt aantonen, die eisen zijn in die tweede stap naar mijn gevoel wel een stuk hoger. Ja, dat er gewoon meer risico's op zitten. Ik ben zo benieuwd waar dit op uit gaat komen.
+
+
+
+C: Ja, ik hoop dat je nog een jaar hebt.
+
+
+
+MG: Ja, ja zeker.
+
+
+
+MV: We gaan het in ieder geval onze kant in kleine gedegen stapjes doen. Dat is heel erg nodig om gaandeweg iedere keer de juiste afslag te kunnen nemen. Dat is in ieder geval onze insteek en daar gaan we hard mee aan de slag. Ja. Ik neem aan dat je ook geïnteresseerd bent in de scriptie die Casper uiteindelijk oplevert, zodat we die ook met je delen.
+
+
+
+MG: Ja, graag.
+
+
+
+C: Ja, je staat op de lijst.
+
+
+
+MV: Super. Ja, oké. Mooi. Heel erg bedankt voor je bijdrage. Ik denk dat we weer wat moois opgehaald hebben waar we goed mee verder kunnen.
+
+
+
+MG: En check even bij Harry Batsch. Ja, Of hij dat is goed. ongeveer met hetzelfde bezig is, want volgens mij Even kijken. Hij had ook weer een jurist erbij betrokken, die heeft mij dan weer geraadpleegd. Wie was dat ook alweer? Maaike, weet je. Ja, de voornaam Maaike zegt jullie ook niks? Nu zo? Ik zit nu in de mail te kijken. Weet de achternaam niet meer.
+
+
+
+C: Maaike Waalstijn?
+
+
+
+MG: Ja, die. Ja, precies. Even kijken. Hebben jullie die al gesproken?
+
+
+
+C: Niet als interview zodanig, nee.
+
+
+
+MG: Oké. En het rapport van de landsadvocaat.
+
+
+
+C: Is dat Pels en Rijken? Ja, die heb ik wel gezien.
+
+
+
+MG: Oké, goed. Oké.
+
+
+
+C: Ja, die stellen wel vragen die heel interessant zijn, maar eigenlijk net adjacent naar mijn probleem heb ik soms het idee van nou ja, moet het dan nog ondertekend worden? Ja, nee, wanneer dan? Mooi, goeie vraag, interessant, maar ook wel staat eigenlijk los van de realisatie van de software op zich.
+
+
+
+MG: Ja, dat moet je echt zien als een eerste verkenning op het vraagstuk van zou je überhaupt met speech-to-text en een samenvatting-achtige software iets. Waar loop je dan allemaal tegen aan als je het wetboek van strafvordering openslaat? Dat is eigenlijk met die platte vraag naam, dan zijn dat op zich de goede dingen. Dat is eigenlijk het startpunt geweest van verder nadenken en verdiepen, verfijnen, dus zo.
+
+
+
+C: dat is waar. Oké. Oké. Ja, super bedankt. Dankjewel, ik hou je op de hoogte. En dan spreken we elkaar hopelijk snel weer.
+
+
+
+MG: Ja, is goed. Bedankt.
+
+
+
+MV: Een hele fijne dag. Dankjewel.
+
+
+
+C: Joejo.
+
+
+
+MV: Dag.

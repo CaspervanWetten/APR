@@ -264,20 +264,19 @@ function sendMetadataUpdate() {
     if (!modal.dataset.filename) return;
 
     const filename = modal.dataset.filename;
-    let procesVerbaal = "";
-
-    modal.querySelectorAll('.q-a-pair').forEach(pair => {
-        const question = pair.querySelector('.question-input').value.trim();
-        const answer = pair.querySelector('.answer-area').value.trim();
-        if (question || answer) { // Send even if one is empty, to save progress
-            procesVerbaal += `Vraag: ${question}\nAntwoord: ${answer}\n\n`;
-        }
-    });
+    const reportArea = modal.querySelector('.report-area');
+    const procesVerbaal = reportArea ? reportArea.value.trim() : "";
 
     const updateData = {
         ID: filename,
-        proces_verbaal: procesVerbaal.trim()
+        proces_verbaal: procesVerbaal
     };
+
+    // Extract preamble data
+    modal.querySelectorAll('.preamble-input').forEach(input => {
+        const field = input.dataset.field;
+        updateData[field] = input.value.trim();
+    });
 
     ws.send(JSON.stringify({
         action: 'update-pv-information',
@@ -285,14 +284,14 @@ function sendMetadataUpdate() {
     }));
 }
 
-function createQaPairElement(question = '', answer = '') {
-    const newPair = document.createElement('div');
-    newPair.className = 'q-a-pair';
-    newPair.innerHTML = `
-        <textarea class="question-input form-control mb-2" placeholder="Type your question here...">${question}</textarea>
-        <textarea class="answer-area form-control p-2" ondragover="allowDrop(event)" ondrop="drop(event, this)" placeholder="Drop text here or type...">${answer}</textarea>
-    `;
-    return newPair;
+function createReportTextArea(content = '') {
+    const textArea = document.createElement('textarea');
+    textArea.className = 'report-area form-control p-2';
+    textArea.ondragover = (event) => allowDrop(event);
+    textArea.ondrop = (event) => drop(event, textArea);
+    textArea.placeholder = "Drop text here or type...";
+    textArea.value = content;
+    return textArea;
 }
 
 function showWordInterface(item) {
@@ -317,49 +316,29 @@ function showWordInterface(item) {
         <p class="text-muted">Created on: ${new Date(item.created_at).toLocaleString()}</p>
         <hr>
         <h6>Details</h6>
-        <ul>
-            <li><strong>Datum:</strong> ${item.datum || 'N/A'}</li>
-            <li><strong>Tijd:</strong> ${item.tijd || 'N/A'}</li>
-            <li><strong>Locatie:</strong> ${item.locatie || 'N/A'}</li>
-            <li><strong>Verdachte:</strong> ${item.verdachte || 'N/A'}</li>
-        </ul>
+        <div class="preamble-fields">
+            <label><strong>Datum:</strong></label><textarea class="preamble-input form-control mb-2" data-field="datum">${item.datum || ''}</textarea>
+            <label><strong>Tijd:</strong></label><textarea class="preamble-input form-control mb-2" data-field="tijd">${item.tijd || ''}</textarea>
+            <label><strong>Locatie:</strong></label><textarea class="preamble-input form-control mb-2" data-field="locatie">${item.locatie || ''}</textarea>
+            <label><strong>Verdachte:</strong></label><textarea class="preamble-input form-control mb-2" data-field="verdachte">${item.verdachte || ''}</textarea>
+        </div>
         <hr>
     `;
 
     const reportEditor = document.getElementById('report-editor');
     reportColumn.insertBefore(preAmble, reportEditor);
+    attachUpdateListeners(preAmble); // Attach listeners to the new preamble textareas
 
     const sourceColumn = document.getElementById('source-column');
     sourceColumn.innerHTML = '<h6>Extracted Information</h6><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>';
     
     reportEditor.innerHTML = ''; // Clear it out first
 
-    if (item.proces_verbaal && item.proces_verbaal.trim()) {
-        const pairs = item.proces_verbaal.trim().split('Vraag: '); // Split by "Vraag: "
-        pairs.forEach(pairStr => {
-            if (pairStr.trim()) {
-                const parts = pairStr.split('\nAntwoord: ');
-                const question = parts[0].trim();
-                const answer = parts.slice(1).join('\nAntwoord: ').trim(); // Rejoin if "Antwoord: " appeared in answer
-                
-                const newPair = createQaPairElement(question, answer);
-                reportEditor.appendChild(newPair);
-                attachUpdateListeners(newPair);
-            }
-        });
-    } else {
-        const newPair = createQaPairElement();
-        reportEditor.appendChild(newPair);
-        attachUpdateListeners(newPair);
-    }
+    const reportContent = item.proces_verbaal ? item.proces_verbaal.trim() : '';
+    const reportTextArea = createReportTextArea(reportContent);
+    reportEditor.appendChild(reportTextArea);
+    attachUpdateListeners(reportEditor);
     
-    const addBtn = document.createElement('button');
-    addBtn.id = 'add-q-a-pair';
-    addBtn.className = 'btn btn-secondary mt-2';
-    addBtn.textContent = 'Add Question';
-    addBtn.addEventListener('click', addQaPair);
-    reportEditor.appendChild(addBtn);
-
     ws.send(JSON.stringify({
         action: "Blocks",
         filename: item.filename
@@ -429,32 +408,16 @@ function drop(event, element) {
     }
 }
 
-function addQaPair() {
-    const reportEditor = document.getElementById('report-editor');
-    const addBtn = document.getElementById('add-q-a-pair');
-    
-    const newPair = createQaPairElement();
-    reportEditor.insertBefore(newPair, addBtn);
-    attachUpdateListeners(newPair);
-}
-
 function generateAndDownloadPdf() {
     const modal = document.getElementById('word-interface-modal');
     const filename = modal.dataset.filename;
-    let procesVerbaal = "";
+    const reportArea = modal.querySelector('.report-area');
+    const procesVerbaal = reportArea ? reportArea.value.trim() : "";
 
-    modal.querySelectorAll('.q-a-pair').forEach(pair => {
-        const question = pair.querySelector('.question-input').value.trim();
-        const answer = pair.querySelector('.answer-area').value.trim();
-        if (question && answer) {
-            procesVerbaal += `Vraag: ${question}\nAntwoord: ${answer}\n\n`;
-        }
-    });
-
-    if (procesVerbaal.trim()) {
+    if (procesVerbaal) {
         const updateData = {
             ID: filename,
-            proces_verbaal: procesVerbaal.trim()
+            proces_verbaal: procesVerbaal
         };
 
         ws.send(JSON.stringify({

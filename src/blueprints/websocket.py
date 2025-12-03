@@ -478,6 +478,99 @@ async def ws_job(request: Request, ws: Websocket, id: str, saje_client: SajeClie
                     file_id, ws, request.app.shared_ctx.job_status, gebruikersID, sessieID))
                 continue
 
+            case "requested-thought":
+                request_data = ujson.loads(data)
+                filename = request_data.get("filename")
+                context = request_data.get("context") # This context includes preamble fields and proces_verbaal
+
+                if not filename or not context:
+                    await ws.send(ujson.dumps({"response": "error", "data": "Bestandsnaam of context ontbreekt voor het genereren van gedachten."}))
+                    continue
+                
+                meta_data_path = "./data/meta_data.json"
+                original_input = ""
+                try:
+                    with open(meta_data_path, "r", encoding="utf-8") as f:
+                        meta_data = ujson.load(f)
+                        item_metadata = meta_data.get(filename)
+                        if item_metadata and "original_input" in item_metadata:
+                            original_input = item_metadata["original_input"]
+                        else:
+                            await ws.send(ujson.dumps({"response": "error", "data": f"Geen originele input gevonden voor {filename} in metadata."}))
+                            continue
+                except FileNotFoundError:
+                    await ws.send(ujson.dumps({"response": "error", "data": "metadata.json niet gevonden."}))
+                    continue
+                except Exception as e:
+                    await ws.send(ujson.dumps({"response": "error", "data": f"Fout bij laden metadata: {e}"}))
+                    continue
+
+                # Extract individual fields from context received from frontend
+                datum = context.get("datum", "N/A")
+                tijd = context.get("tijd", "N/A")
+                locatie = context.get("locatie", "N/A")
+                verdachte = context.get("verdachte", "N/A")
+                proces_verbaal_draft = context.get("proces_verbaal", "") # User's current draft
+
+                llm_prompt = f"""
+                Je bent een assistent die de gebruiker helpt met het opstellen van een proces-verbaal.
+                Analyseer de volgende originele transcriptie van een verhoor en de huidige conceptversie van het proces-verbaal van de gebruiker.
+                Genereer 3 tot 5 beknopte en contextueel relevante gedachten die de gebruiker kunnen helpen bij het schrijven van het proces-verbaal.
+                Elke gedachte moet een korte zin of zinsnede zijn die een inzicht, een vraag, een mogelijke inconsistentie, een relevante observatie, of een alternatief perspectief biedt op basis van de GEHELE verhoortekst, in relatie tot wat al in het conceptproces-verbaal staat.
+                De gedachten moeten in het Nederlands zijn en als een JSON-array van strings worden geretourneerd.
+
+                Originele Verhoortranscriptie:
+                ---
+                {original_input}
+                ---
+
+                Huidig concept Proces-verbaal:
+                ---
+                Datum: {datum}
+                Tijd: {tijd}
+                Locatie: {locatie}
+                Verdachte: {verdachte}
+                Proces-verbaal tekst:
+                {proces_verbaal_draft}
+                ---
+
+                Geef alleen de JSON-array terug. Voorbeeld:
+                ["Overweeg de alibi-details van de verdachte.", "Zijn er inconsistenties in de tijdlijn?", "Welke motieven kunnen aanwezig zijn?", "Vergelijk met soortgelijke zaken.", "Focus op de emotionele toestand van getuigen."]
+                """
+
+                try:
+                    response_str = engine.generate_response("thought-generator", prompt=llm_prompt)
+                    
+                    # Clean the response to get only the JSON
+                    response_str = response_str.strip()
+                    if response_str.startswith("```json"):
+                        response_str = response_str[7:]
+                    if response_str.endswith("```"):
+                        response_str = response_str[:-3]
+                    response_str = response_str.strip()
+
+                    thoughts = ujson.loads(response_str)
+                    if not isinstance(thoughts, list):
+                        raise ValueError("LLM-antwoord is geen lijst met gedachten.")
+                    
+                    # Ensure thoughts are in Dutch, if not, attempt translation or flag
+                    # (For this task, we assume the LLM will generate in Dutch based on prompt)
+
+                    await ws.send(ujson.dumps({"response": "thought-suggestions", "data": thoughts}))
+                except Exception as e:
+                    technical_log(
+                        "llm-thought-generation-error",
+                        gebruikersID=gebruikersID,
+                        sessieID=sessieID,
+                        error=str(e),
+                        context={
+                            "filename": filename,
+                            "llm_prompt": llm_prompt # Log the constructed prompt
+                        } 
+                    )
+                    await ws.send(ujson.dumps({"response": "error", "data": f"Fout bij het genereren van gedachten: {e}"}))
+                continue
+
             case _:
                 technical_log(
                     "unknow communication",

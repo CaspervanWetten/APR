@@ -42,7 +42,7 @@ def store_information(file_path, information):
     
 
     metadata = {
-        "model": "DeepSeep-AI/DeepSeek-AI-R1-Qwen-Distill-1.5B",
+        "model": "OpenAI/ChatGPT-5.1",
         "ID": file_id,
         "original_filename": filename,
         "created_at": str(datetime.now()),
