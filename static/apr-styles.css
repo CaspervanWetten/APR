@@ -342,3 +342,32 @@ body {
   max-width: 5rem;
   white-space: nowrap;
 }
+/* Custom Modal Title Bar */
+.modal-title-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-bottom: 1px solid #dee2e6;
+  border-radius: 11px 11px 0 0; /* Match parent's border-radius */
+}
+
+.modal-title-text {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.modal-title-bar .btn-close {
+  filter: invert(1);
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  opacity: 0.8;
+}
+.modal-title-bar .btn-close:hover {
+    opacity: 1;
+}

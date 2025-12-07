@@ -15,6 +15,10 @@ let currentThoughtBubbles = [];
 let activeThoughtIndex = -1;
 let reportTextArea = null; // Will store a reference to the main report textarea
 let currentThoughtBubblesElements = []; // Store references to the actual DOM elements
+let wordModalInstance = null;
+let wordModalEl = null;
+let thoughtBubbleInterval = null;
+
 
 // ==============
 // UPLOAD AND RETRY FORM
@@ -260,7 +264,6 @@ function debounce(func, delay) {
 }
 
 const debouncedSendMetadataUpdate = debounce(sendMetadataUpdate, 500);
-const debouncedTriggerThoughtGeneration = debounce(triggerThoughtGeneration, 1000);
 
 function attachUpdateListeners(container) {
     const textareas = container.querySelectorAll('textarea:not([data-listener-attached])');
@@ -302,26 +305,142 @@ function createReportTextArea(content = '') {
     textArea.ondrop = (event) => drop(event, textArea);
     textArea.placeholder = "Begin hier met het typen van uw rapport...";
     textArea.value = content;
-    textArea.addEventListener('input', debouncedTriggerThoughtGeneration); // Trigger thoughts on input
     return textArea;
 }
 
+function createWordInterfaceModal() {
+    if (document.getElementById('word-interface-modal')) return;
+
+    const modalHTML = `
+        <div class="modal fade" id="word-interface-modal" tabindex="-1" aria-labelledby="wordInterfaceModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-fullscreen-lg-down">
+                <div class="modal-content">
+                    <div class="modal-title-bar">
+                        <h5 class="modal-title-text" id="wordInterfaceModalLabel">Proces Verbaal Editor (Prototype 4)</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div id="report-column" class="col-md-12">
+                                    <div id="report-editor">
+                                        <div id="thought-bubbles-container">
+                                            <!-- Thought bubbles will be dynamically inserted here -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="generate-pdf-btn">Generate PDF</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+function getCursorXY(textarea) {
+    const mirror = document.createElement('div');
+    const style = getComputedStyle(textarea);
+
+    for (const prop of style) {
+        mirror.style[prop] = style[prop];
+    }
+    
+    mirror.style.position = 'absolute';
+    mirror.style.left = '-9999px';
+    mirror.style.top = '-9999px';
+    mirror.style.whiteSpace = 'pre-wrap';
+    mirror.style.wordWrap = 'break-word';
+
+    document.body.appendChild(mirror);
+
+    const text = textarea.value.substring(0, textarea.selectionStart);
+    mirror.textContent = text;
+    
+    const span = document.createElement('span');
+    span.innerHTML = '&#8203;'; 
+    mirror.appendChild(span);
+    
+    const coords = {
+        left: span.offsetLeft + textarea.offsetLeft - textarea.scrollLeft,
+        top: span.offsetTop + textarea.offsetTop - textarea.scrollTop
+    };
+
+    document.body.removeChild(mirror);
+
+    return coords;
+}
+
+function repositionThoughtBubbles(coords) {
+    const occupiedPositions = [];
+    const angleStep = (2 * Math.PI) / currentThoughtBubblesElements.length;
+    const radius = 100;
+
+    currentThoughtBubblesElements.forEach((thoughtBubble, index) => {
+        const bubbleWidth = thoughtBubble.offsetWidth;
+        const bubbleHeight = thoughtBubble.offsetHeight;
+        let collision;
+        let attempt = 0;
+        let currentRadius = radius;
+        let left, top;
+
+        do {
+            collision = false;
+            const angle = index * angleStep + (attempt * 0.5);
+            left = coords.left + currentRadius * Math.cos(angle) - bubbleWidth / 2;
+            top = coords.top + currentRadius * Math.sin(angle) - bubbleHeight / 2;
+
+            const newRect = { left, top, right: left + bubbleWidth, bottom: top + bubbleHeight };
+
+            for (const pos of occupiedPositions) {
+                if (!(newRect.left > pos.right || newRect.right < pos.left || newRect.top > pos.bottom || newRect.bottom < pos.top)) {
+                    collision = true;
+                    currentRadius += 20;
+                    attempt++;
+                    break;
+                }
+            }
+        } while (collision && attempt < 5);
+
+        thoughtBubble.style.left = `${left}px`;
+        thoughtBubble.style.top = `${top}px`;
+        occupiedPositions.push({ left, top, right: left + bubbleWidth, bottom: top + bubbleHeight });
+    });
+}
+
 function showWordInterface(item) {
-    const wordModalEl = document.getElementById('word-interface-modal');
-    if (!wordModalEl) return;
-    const wordModal = new bootstrap.Modal(wordModalEl);
+    if (!wordModalInstance) {
+        createWordInterfaceModal();
+        wordModalEl = document.getElementById('word-interface-modal');
+        wordModalInstance = new bootstrap.Modal(wordModalEl);
+
+        wordModalEl.addEventListener('hidden.bs.modal', function () {
+            if (thoughtBubbleInterval) {
+                clearInterval(thoughtBubbleInterval);
+                thoughtBubbleInterval = null;
+            }
+            const existingPreamble = document.querySelector('.report-preamble');
+            if (existingPreamble) {
+                existingPreamble.remove();
+            }
+            const reportEditor = document.getElementById('report-editor');
+            if (reportEditor) {
+                reportEditor.innerHTML = '<div id="thought-bubbles-container"></div>';
+            }
+        });
+    }
     
     wordModalEl.dataset.filename = item.filename;
-    wordModal.show();
+    wordModalInstance.show();
 
     const reportColumn = document.getElementById('report-column');
     const reportEditor = document.getElementById('report-editor');
     const thoughtBubblesContainer = document.getElementById('thought-bubbles-container');
-
-    // Clear previous thoughts
-    thoughtBubblesContainer.innerHTML = '';
-    currentThoughtBubbles = [];
-    activeThoughtIndex = -1;
 
     // Preamble setup
     const existingPreamble = reportColumn.querySelector('.report-preamble');
@@ -348,184 +467,69 @@ function showWordInterface(item) {
     attachUpdateListeners(preAmble);
 
     // Report Area setup
-    // Clear it out first, but preserve the thought-bubbles-container
-    const currentThoughtContainer = reportEditor.querySelector('#thought-bubbles-container');
-    reportEditor.innerHTML = ''; 
-    reportEditor.appendChild(currentThoughtContainer);
-
-
     const reportContent = item.proces_verbaal ? item.proces_verbaal.trim() : '';
-    reportTextArea = createReportTextArea(reportContent); // Assign to global variable
-    reportEditor.insertBefore(reportTextArea, thoughtBubblesContainer); // Insert before the thought container
+    reportTextArea = createReportTextArea(reportContent);
+    reportEditor.innerHTML = ''; 
+    reportEditor.appendChild(thoughtBubblesContainer);
+    reportEditor.insertBefore(reportTextArea, thoughtBubblesContainer);
     attachUpdateListeners(reportEditor);
 
-    // Initial thoughts generation
-    if (reportContent) {
-        triggerThoughtGeneration();
-    }
+    const updateBubblesPosition = () => {
+        if (!reportTextArea || currentThoughtBubblesElements.length === 0) return;
+        const coords = getCursorXY(reportTextArea);
+        repositionThoughtBubbles(coords);
+    };
 
-    // Keyboard navigation for thought bubbles
-    if (reportTextArea) {
-        reportTextArea.addEventListener('keydown', handleThoughtKeyboardNavigation);
+    reportTextArea.addEventListener('keyup', updateBubblesPosition);
+    reportTextArea.addEventListener('click', updateBubblesPosition);
+    reportTextArea.addEventListener('scroll', updateBubblesPosition);
+
+    if (thoughtBubbleInterval) {
+        clearInterval(thoughtBubbleInterval);
     }
+    thoughtBubbleInterval = setInterval(() => {
+        triggerThoughtGeneration();
+    }, 8000); 
+
+    triggerThoughtGeneration();
     
-    // Attach generate PDF handler (ensure it's not duplicated if already attached via DOMContentLoaded)
     const generateBtn = document.getElementById('generate-pdf-btn');
     if (generateBtn) {
-        generateBtn.removeEventListener('click', generateAndDownloadPdf); // Prevent duplicate listeners
+        generateBtn.removeEventListener('click', generateAndDownloadPdf);
         generateBtn.addEventListener('click', generateAndDownloadPdf);
     }
-
-    // The 'Blocks' action from proto3 is not relevant here for proto4's thought bubbles.
-    // However, if the backend still expects it for some reason, keep it.
-    // For now, I'll assume LLM thoughts are triggered by user input in the report area.
-    // ws.send(JSON.stringify({
-    //     action: "Blocks",
-    //     filename: item.filename
-    // }));
 }
+
 
 function populateThoughtBubbles(thoughts) {
     const thoughtBubblesContainer = document.getElementById('thought-bubbles-container');
-    // Clear previous thoughts but preserve the container itself
+    if (!thoughtBubblesContainer) return;
+    
     while (thoughtBubblesContainer.firstChild) {
         thoughtBubblesContainer.removeChild(thoughtBubblesContainer.firstChild);
     }
-    currentThoughtBubbles = thoughts;
-    activeThoughtIndex = -1; // Reset active thought
-    currentThoughtBubblesElements = []; // Reset stored DOM elements
+    currentThoughtBubbles = thoughts.slice(0, Math.floor(Math.random() * 3) + 2); // 2 to 4 bubbles
+    currentThoughtBubblesElements = [];
 
-    if (!thoughts || thoughts.length === 0) {
-        return;
-    }
-
-    const occupiedPositions = []; // Store occupied positions (x, y, width, height)
-
-    thoughts.forEach((thought, index) => {
+    currentThoughtBubbles.forEach((thought, index) => {
         const thoughtBubble = document.createElement('div');
         thoughtBubble.className = 'thought-bubble';
         thoughtBubble.textContent = thought;
-        thoughtBubble.tabIndex = 0; // Make it focusable
+        thoughtBubble.tabIndex = 0;
         thoughtBubble.dataset.index = index;
-        thoughtBubble.draggable = true; // Make it draggable
-
-        // Add to the container immediately to get its size
-        thoughtBubblesContainer.appendChild(thoughtBubble);
-
-        const bubbleRect = thoughtBubble.getBoundingClientRect(); // Get actual dimensions after adding to DOM
-        const bubbleWidth = bubbleRect.width;
-        const bubbleHeight = bubbleRect.height;
-
-        let collision;
-        let randomLeft, randomTop;
-        let attempts = 0;
-        const maxAttempts = 100; // Prevent infinite loop for positioning
-
-        // Use viewport dimensions for positioning
-        const viewportWidth = window.innerWidth;
-        const viewportHeight = window.innerHeight;
-
-        // Try to find a non-overlapping position
-        do {
-            collision = false;
-            // Generate random positions within a safe area of the viewport
-            // Avoid extreme edges and the report modal area
-            const safePadding = 50; // Pixels from edges
-            randomLeft = Math.random() * (viewportWidth - bubbleWidth - 2 * safePadding) + safePadding;
-            randomTop = Math.random() * (viewportHeight - bubbleHeight - 2 * safePadding) + safePadding;
-
-            const newRect = {
-                left: randomLeft,
-                top: randomTop,
-                right: randomLeft + bubbleWidth,
-                bottom: randomTop + bubbleHeight
-            };
-
-            for (const existingRect of occupiedPositions) {
-                if (!(newRect.left > existingRect.right ||
-                      newRect.right < existingRect.left ||
-                      newRect.top > existingRect.bottom ||
-                      newRect.bottom < existingRect.top)) {
-                    collision = true;
-                    break;
-                }
-            }
-            attempts++;
-        } while (collision && attempts < maxAttempts);
-
-        thoughtBubble.style.left = `${randomLeft}px`;
-        thoughtBubble.style.top = `${randomTop}px`;
-        occupiedPositions.push({
-            left: randomLeft,
-            top: randomTop,
-            right: randomLeft + bubbleWidth,
-            bottom: randomTop + bubbleHeight
-        });
-
-
-        let isDragging = false;
-        let offsetX, offsetY;
-
-        // Make thought bubbles draggable
-        thoughtBubble.addEventListener('mousedown', (e) => {
-            isDragging = true;
-            thoughtBubble.style.cursor = 'grabbing';
-            offsetX = e.clientX - thoughtBubble.getBoundingClientRect().left;
-            offsetY = e.clientY - thoughtBubble.getBoundingClientRect().top;
-            thoughtBubble.style.transition = 'none'; // Disable transition during drag
-            thoughtBubble.classList.add('dragging');
-        });
-
-        document.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            e.preventDefault(); // Prevent text selection during drag
-            thoughtBubble.style.left = `${e.clientX - offsetX}px`;
-            thoughtBubble.style.top = `${e.clientY - offsetY}px`;
-        });
-
-        document.addEventListener('mouseup', () => {
-            if (isDragging) {
-                isDragging = false;
-                thoughtBubble.style.cursor = 'grab';
-                thoughtBubble.style.transition = 'transform 0.2s ease, background-color 0.2s ease'; // Re-enable transition
-                thoughtBubble.classList.remove('dragging');
-
-                // Check if dropped onto the reportTextArea
-                const reportRect = reportTextArea.getBoundingClientRect();
-                const bubbleRectAfterDrag = thoughtBubble.getBoundingClientRect();
-
-                if (
-                    bubbleRectAfterDrag.left < reportRect.right &&
-                    bubbleRectAfterDrag.right > reportRect.left &&
-                    bubbleRectAfterDrag.top < reportRect.bottom &&
-                    bubbleRectAfterDrag.bottom > reportRect.top
-                ) {
-                    insertThoughtIntoReport(thought, thoughtBubble); // Pass bubble for removal
-                }
-            }
-        });
-
-        // Click to insert (if not dragging)
+        
         thoughtBubble.addEventListener('click', () => {
-            if (!isDragging) {
-                insertThoughtIntoReport(thought, thoughtBubble); // Pass bubble for removal
-            }
+            insertThoughtIntoReport(thought, thoughtBubble);
         });
 
-        thoughtBubble.addEventListener('focus', () => {
-            // Remove active-thought from previously active element
-            if (activeThoughtIndex !== -1 && currentThoughtBubblesElements[activeThoughtIndex]) {
-                currentThoughtBubblesElements[activeThoughtIndex].classList.remove('active-thought');
-            }
-            thoughtBubble.classList.add('active-thought');
-            activeThoughtIndex = index;
-        });
-
-        thoughtBubble.addEventListener('blur', () => {
-            thoughtBubble.classList.remove('active-thought');
-        });
+        thoughtBubblesContainer.appendChild(thoughtBubble);
         currentThoughtBubblesElements.push(thoughtBubble);
     });
+
+    if(reportTextArea){
+        const coords = getCursorXY(reportTextArea);
+        repositionThoughtBubbles(coords);
+    }
 }
 
 function insertThoughtIntoReport(thought, thoughtBubbleElement = null) {
@@ -537,22 +541,18 @@ function insertThoughtIntoReport(thought, thoughtBubbleElement = null) {
 
     reportTextArea.value = currentText.substring(0, startPos) + thought + currentText.substring(endPos, currentText.length);
 
-    // Move cursor after the inserted text
     reportTextArea.selectionStart = startPos + thought.length;
     reportTextArea.selectionEnd = startPos + thought.length;
 
     reportTextArea.focus();
-    sendMetadataUpdate(); // Save the updated report
-    showPopup("Gedachtenbubbel verplaatst naar rapport!", "#28a745"); // Dutch popup
+    sendMetadataUpdate();
+    showPopup("Gedachtenbubbel verplaatst naar rapport!", "#28a745");
 
-    // Remove the thought bubble if it was used
     if (thoughtBubbleElement && thoughtBubbleElement.parentNode) {
         thoughtBubbleElement.parentNode.removeChild(thoughtBubbleElement);
-        // Remove from currentThoughtBubblesElements
         const index = currentThoughtBubblesElements.indexOf(thoughtBubbleElement);
         if (index > -1) {
             currentThoughtBubblesElements.splice(index, 1);
-            // Re-index if necessary (for keyboard navigation)
             currentThoughtBubblesElements.forEach((el, idx) => el.dataset.index = idx);
         }
     }
@@ -569,21 +569,20 @@ function triggerThoughtGeneration() {
         preambleData[field] = input.value.trim();
     });
 
-    if (currentText.trim().length < 20) { // Only generate thoughts if enough text is present
-        populateThoughtBubbles([]); // Clear thoughts if text is too short
+    if (currentText.trim().length < 20) {
+        populateThoughtBubbles([]);
         return;
     }
     
-    // Combine report text and preamble data for context
     const fullContext = {
         ...preambleData,
         proces_verbaal: currentText
     };
 
     ws.send(JSON.stringify({
-        action: 'requested-thought', // New action for thought generation
+        action: 'requested-thought',
         filename: modal.dataset.filename,
-        context: fullContext // Send all metadata
+        context: fullContext
     }));
 }
 
@@ -622,7 +621,6 @@ function generateAndDownloadPdf() {
             ID: filename,
             proces_verbaal: procesVerbaal
         };
-        // Also add preamble data for PDF generation if needed
         modal.querySelectorAll('.preamble-input').forEach(input => {
             const field = input.dataset.field;
             updateData[field] = input.value.trim();

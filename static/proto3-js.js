@@ -257,6 +257,64 @@ function debounce(func, delay) {
 
 const debouncedUpdate = debounce(sendMetadataUpdate, 500);
 
+function ensureModalExists() {
+  if (document.getElementById("proto3Modal")) return;
+
+  const modal = document.createElement("div");
+  modal.id = "proto3Modal";
+  Object.assign(modal.style, {
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "white",
+    border: "1px solid #ccc",
+    borderRadius: "12px",
+    boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
+    zIndex: "1000",
+    display: "none",
+    width: "90%",
+    maxWidth: "1200px",
+    maxHeight: "90%",
+    overflow: "hidden",
+    display: 'flex',
+    flexDirection: 'column'
+  });
+
+  const titleBar = document.createElement("div");
+  titleBar.className = "modal-title-bar"; // Yellow title bar
+  titleBar.innerHTML = `<h5 class="modal-title-text">Report Editor - Prototype 3</h5><button type="button" class="btn-close">&times;</button>`;
+  modal.appendChild(titleBar);
+  
+  titleBar.querySelector('.btn-close').addEventListener('click', () => {
+    modal.style.display = "none";
+  });
+
+  const mainContent = document.createElement('div');
+  mainContent.className = "container-fluid";
+  mainContent.style.padding = '20px';
+  mainContent.style.overflowY = 'auto';
+  mainContent.style.flex = '1';
+  modal.appendChild(mainContent);
+
+  const row = document.createElement('div');
+  row.className = 'row';
+  mainContent.appendChild(row);
+
+  const sourceColumn = document.createElement('div');
+  sourceColumn.id = 'source-column';
+  sourceColumn.className = 'col-md-4';
+  row.appendChild(sourceColumn);
+
+  const reportColumn = document.createElement('div');
+  reportColumn.id = 'report-column';
+  reportColumn.className = 'col-md-8';
+  row.appendChild(reportColumn);
+  
+  document.body.appendChild(modal);
+}
+
+
 function attachUpdateListeners(container) {
     const textareas = container.querySelectorAll('textarea:not([data-listener-attached])');
     textareas.forEach(textarea => {
@@ -267,7 +325,7 @@ function attachUpdateListeners(container) {
 }
 
 function sendMetadataUpdate() {
-    const modal = document.getElementById('word-interface-modal');
+    const modal = document.getElementById('proto3Modal');
     if (!modal.dataset.filename) return;
 
     const filename = modal.dataset.filename;
@@ -302,19 +360,12 @@ function createReportTextArea(content = '') {
 }
 
 function showWordInterface(item) {
-    const wordModalEl = document.getElementById('word-interface-modal');
-    if (!wordModalEl) return;
-    const wordModal = new bootstrap.Modal(wordModalEl);
-    
-    wordModalEl.dataset.filename = item.filename;
-    wordModal.show();
+    ensureModalExists();
+    const modal = document.getElementById('proto3Modal');
+    modal.dataset.filename = item.filename;
 
-    const reportColumn = document.getElementById('report-column');
-
-    const existingPreamble = reportColumn.querySelector('.report-preamble');
-    if (existingPreamble) {
-        existingPreamble.remove();
-    }
+    const reportColumn = modal.querySelector('#report-column');
+    reportColumn.innerHTML = ''; // Clear previous content
 
     const preAmble = document.createElement('div');
     preAmble.className = 'report-preamble';
@@ -331,16 +382,17 @@ function showWordInterface(item) {
         </div>
         <hr>
     `;
+    reportColumn.appendChild(preAmble);
+    attachUpdateListeners(preAmble);
 
-    const reportEditor = document.getElementById('report-editor');
-    reportColumn.insertBefore(preAmble, reportEditor);
-    attachUpdateListeners(preAmble); // Attach listeners to the new preamble textareas
+    const reportEditor = document.createElement('div');
+    reportEditor.id = 'report-editor';
+    reportEditor.className = 'h-100 p-3 border rounded';
+    reportColumn.appendChild(reportEditor);
 
-    const sourceColumn = document.getElementById('source-column');
+    const sourceColumn = modal.querySelector('#source-column');
     sourceColumn.innerHTML = '<h6>Extracted Information</h6><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div>';
     
-    reportEditor.innerHTML = ''; // Clear it out first
-
     const reportContent = item.proces_verbaal ? item.proces_verbaal.trim() : '';
     const reportTextArea = createReportTextArea(reportContent);
     reportEditor.appendChild(reportTextArea);
@@ -350,6 +402,8 @@ function showWordInterface(item) {
         action: "Blocks",
         filename: item.filename
     }));
+
+    modal.style.display = 'flex';
 }
 
 function populateWordInterface(data) {
